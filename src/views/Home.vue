@@ -4,7 +4,6 @@
     <HelloWorld id="main-title" msg="FitBuddy" />
     <div id="feedId">
       <div v-for="event in events" :key="event.id" id="post">
-
         <span id="event-name">{{event.name}}</span>
         <br />
         <span id="event-des">{{event.description}}</span>
@@ -14,6 +13,13 @@
         <span id="event-date">{{event.date}}</span>
 
         <p id="more-info">...more</p>
+
+        <input type="button" @click="increment(1)" value="join" />
+
+        <div>
+          <p>{{$store.state.counter}}</p>/
+          <p>{{$store.state.participants}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -30,8 +36,17 @@ export default {
   },
   computed: {
     events() {
+      console.log("join pressed");
       return this.$store.state.events;
     }
+  },
+  methods: {
+    increment(amount) {
+      return this.$store.commit("joinMutation", amount);
+    }
+  },
+  data() {
+    return {};
   }
 };
 </script>

@@ -102,6 +102,9 @@
 #post-image {
   margin-top: 5px;
   size: 2px;
-  
+
+}
+#join-button{
+  margin-right: 5px;
 }
 </style>
