@@ -4,18 +4,18 @@
     <HelloWorld id="main-title" msg="FitBuddy" />
     <div id="feedId">
       <div v-for="event in events" :key="event.id" id="post">
+
         <span id="event-name">{{event.name}}</span>
-        <br>
+        <br />
         <span id="event-des">{{event.description}}</span>
-        <br>
+        <br />
         <span id="event-time">{{event.time}}</span>
-        <br>
+        <br />
         <span id="event-date">{{event.date}}</span>
-      
+
         <p id="more-info">...more</p>
-        </div>
+      </div>
     </div>
-   
   </div>
 </template>
 
