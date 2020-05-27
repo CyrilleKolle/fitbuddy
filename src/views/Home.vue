@@ -3,11 +3,8 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <HelloWorld id="main-title" msg="FitBuddy" />
     <b-button @click="open = true" id="filter-button">
-      <font-awesome-icon icon="fas fa-filter" />
-        <i class="fas fa-filter" @click="open = true" ></i>
-          
+      <i class="fas fa-filter"></i>
     </b-button>
-  
 
     <section>
       <b-sidebar
@@ -88,9 +85,17 @@
 
         <p id="more-info">...more</p>
 
-        <div>
+        <!-- <div>
           <p>{{$store.state.counter}}</p>/
           <p>{{event.participants}}</p>
+        </div>-->
+        <div class="columns" id="interest" style="height: 0.2px" >
+       
+          <button class="column is-half" >
+            Interested
+          </button>
+          <div class="column" > {{event.participants}} </div>
+          <div class="column">{{$store.state.counter}} </div>
         </div>
       </div>
     </div>
@@ -146,6 +151,9 @@ export default {
 <style>
 .p-1 {
   padding: 1em;
+}
+#interest {
+  columns: auto;
 }
 </style>
 

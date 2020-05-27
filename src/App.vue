@@ -46,6 +46,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 #post {
   border-top: 2px solid #eee;
@@ -55,6 +56,7 @@
   padding-bottom: 30px;
   padding-top: 40px;
   text-align: center;
+ 
   /* width: 600px;
   height: 150px;
   margin: 2px;
