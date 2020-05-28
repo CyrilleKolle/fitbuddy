@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import SignUp from '../views/Registration.vue'
 
 Vue.use(VueRouter)
 
@@ -19,9 +20,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: () => import('../views/Profile.vue')
+
+    path: '/signUp',
+    name: 'SignUp',
+    component: SignUp
+
   },
 ]
 
