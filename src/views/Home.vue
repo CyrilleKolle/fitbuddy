@@ -89,14 +89,16 @@
           <p>{{$store.state.counter}}</p>/
           <p>{{event.participants}}</p>
         </div>-->
-        <div class="columns" id="interest" style="height: 0.2px" >
-       
-          <button class="column is-half" >
-            Interested
-          </button>
-          <div class="column" > {{event.participants}} </div>
-          <div class="column">{{$store.state.counter}} </div>
-        </div>
+      `   <div class="columns" id="interest" style="height: 0.2px" >
+        
+            <button class="column is-half" >
+              Interested
+            </button>
+            <!-- <div class="column" > {{event.participants}} </div> -->
+              <div class="column">0 </div>
+            <!-- <div class="column">{{$store.state.counter}} </div> -->
+              <div class="column"> 0 </div>
+          </div>`
       </div>
     </div>
   </div>
