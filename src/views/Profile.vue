@@ -1,17 +1,19 @@
 <template>
-  <div class="profile">
+  <div>
     <ProfileComp></ProfileComp>
+    <test></test>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import ProfileComp from "@/components/ProfileComp.vue";
+import test from "@/components/test.vue";
 
 export default {
-  name: "Profile",
   components: {
-    ProfileComp
+    ProfileComp,
+    test
   }
 };
 </script>
