@@ -5,7 +5,7 @@ import About from '../views/About.vue'
 import Post from '../views/postEventView.vue'
 import Profile from '../views/Profile.vue'
 import SignUp from '../views/Registration.vue'
-
+import LogIn from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +36,11 @@ const routes = [
     component: SignUp
 
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LogIn
+  }
 ]
 
 const router = new VueRouter({
