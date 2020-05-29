@@ -36,7 +36,7 @@
                    <b-navbar-item tag="router-link" :to="{ path: '/signUp' }" class="button is-twitter">
                 Sign Up
             </b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{ path: '/saknas' }" class="button is-light">
+            <b-navbar-item tag="router-link" :to="{ path: '/login' }" class="button is-light">
                 Log in
             </b-navbar-item>
                 </div>
