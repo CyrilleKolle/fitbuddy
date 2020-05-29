@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 dom.watch()
 

@@ -1,57 +1,44 @@
 <template>
   <div id="app">
-
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
       <router-link to="/post">Post</router-link>
       <router-link to="/signUp">Sign Up</router-link>
       <router-link to="/profile">Profile</router-link>
-
-
     </div>
-    <nav id="log">
-      <button>login</button>
-      <button>register</button>
-      <button>logout</button>
-    </nav> -->
+     -->
 
-      <b-navbar>
+    <b-navbar class="is-primary">
         <template slot="brand">
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                <!-- <img
+                <img
                     src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
                     alt="Lightweight UI components for Vue.js based on Bulma"
-                > -->
-             
+                >
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item href="#">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 Home
             </b-navbar-item>
-            <b-navbar-item href="#">
-                Documentation
+            <b-navbar-item tag="router-link" :to="{ path: '/post' }">
+                Post
             </b-navbar-item>
-            <b-navbar-dropdown label="Info">
-                <b-navbar-item href="#">
-                    About
-                </b-navbar-item>
-                <b-navbar-item href="#">
-                    Contact
-                </b-navbar-item>
-            </b-navbar-dropdown>
+            <b-navbar-item tag="router-link" :to="{ path: '/profile' }">
+                Profile
+            </b-navbar-item>
         </template>
 
         <template slot="end">
-            <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a class="button is-primary">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light">
-                        Log in
-                    </a>
+            <b-navbar-item>
+                <div class="buttons" v-if="true">
+                   <b-navbar-item tag="router-link" :to="{ path: '/signUp' }" class="button is-twitter">
+                Sign Up
+            </b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{ path: '/saknas' }" class="button is-light">
+                Log in
+            </b-navbar-item>
                 </div>
             </b-navbar-item>
         </template>
@@ -60,10 +47,43 @@
   </div>
 </template>
 
+<style lang="scss">
+
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: #68bed8;
+$primary-invert: findColorInvert($primary);
+$twitter: rgb(64, 115, 255);
+$twitter-invert: findColorInvert($twitter);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+    "white": ($white, $black),
+    "black": ($black, $white),
+    "light": ($light, $light-invert),
+    "dark": ($dark, $dark-invert),
+    "primary": ($primary, $primary-invert),
+    "info": ($info, $info-invert),
+    "success": ($success, $success-invert),
+    "warning": ($warning, $warning-invert),
+    "danger": ($danger, $danger-invert),
+    "twitter": ($twitter, $twitter-invert)
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+</style>
+
 <style>
-.home {
-  font-family: "Miller Ban It";
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -71,42 +91,9 @@
   text-align: center;
   color: #2c3e50;
 }
-#main-title {
-  font-family: "Miller Ban It";
-  font-size: 2rem;
-  align-items: center;
-}
-#log {
-  float: right;
-  position: relative;
-  font-size: 24px;
-}
+
 #nav {
   padding: 30px;
-  position: absolute;
-}
-#nav :hover {
-  color: rgb(12, 142, 202);
-}
-#feedId {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-#post {
-  border-top: 2px solid #eee;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: auto;
-  padding-bottom: 30px;
-  padding-top: 40px;
-  text-align: center;
- 
-  /* width: 600px;
-  height: 150px;
-  margin: 2px;
-  border: 1ex solid rgb(14, 7, 2); */
 }
 
 #nav a {
@@ -117,42 +104,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-#event-name {
-  float: left;
-  font-family: "Miller Ban It";
-  font-size: 24px;
-  font-style: italic;
-  margin-bottom: 20px;
-}
-#event-des {
-  /* border: 0.2ex solid black; */
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
-}
-#event-time {
-  float: right;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-#event-date {
-  float: right;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-#more-info {
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  color: rgb(109, 197, 238);
-}
-#post-image {
-  margin-top: 5px;
-  size: 2px;
 
-}
-#join-button{
-  margin-right: 5px;
-}
 </style>
