@@ -9,7 +9,7 @@
     </div>
      -->
 
-    <b-navbar class="is-primary">
+    <b-navbar class="is-primary" fixed-top="true">
         <template slot="brand">
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 <img
@@ -90,6 +90,7 @@ $link-focus-border: $primary;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
 }
 
 #nav {

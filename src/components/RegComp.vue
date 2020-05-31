@@ -1,35 +1,34 @@
 <template>
   <div>
+    <div class="fixedBox">
         <div class="container">
+           <div class="logo">
+            <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px"  >
+          </div>  
           <h1>Registrera</h1>
-          <p>
-            Fyll i detta formulär för att skapa ett konto.</p>
-          <hr>
       
-          <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Skriv in e-mail" name="email" id="email" required>
+         <div class="textbox">
+            <input type="text" placeholder="Förnamn" name="" value="">
+            </div>
 
-          <label for="full-name"><b>Fullständiga namn</b></label>
-          <input type="text" placeholder="Ange fullt namn" name="full-name" id="full-name" required>
+            <div class="textbox">
+            <input type="text" placeholder="Efternamn" name="" value="">
+            </div>
 
-          <label for="användarnamn"><b>Användarnamn</b></label>
-          <input type="text" placeholder="Skriv in användarnamnet" name="användarnamn" id="användarnamn" required>
-      
-          <label for="lösen"><b>Lösenord</b></label>
-          <input type="lösenord" placeholder="Skriv in lösenord" name="lösen" id="lösen" required>
-      
-          <label for="psw-repeat"><b>Repetera lösenord</b></label>
-          <input type="lösenord" placeholder="Repetera lösenord" name="psw-repeat" id="psw-repeat" required>
+          <div class="textbox">
+            <input type="text" placeholder="Användarnamn" name="" value="">
+            </div>
 
-          <hr>
-        
-          <button type="submit" class="registerbtn">Registrera</button>
+        <div class="textbox">
+            <input type="password" placeholder="Lösenord" name="" value=""> <br>
+            
+            </div>
         </div>
-      
-        <div class="container signin">
-          <p>Har du redan ett konto? <a href="#">Logga in</a>.</p>
+            <br>
+            <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/login' }">Registrera</b-button>
         </div>
-  </div>
+        </div>
+            
 </template>
 
 <script>
@@ -40,53 +39,54 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-* {box-sizing: border-box}
 
-.container {
-  padding: 16px;
+.logo {
+  margin-left: 50px;
 }
 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
+.fixedBox {
+  position: static;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-.registerbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-.registerbtn:hover {
-  opacity:1;
+.container h1{
+    
+    font-size: 40px;
+    border-bottom: 6px solid #68bed8;
+    
+    padding: 13px 0
+    
 }
 
 
-a {
-  color: dodgerblue;
-}
-
-.signin {
-  background-color: #f1f1f1;
+.container h1,p{
   text-align: center;
 }
+
+.textbox input{
+    border: none;
+    outline: none;
+    background:none;
+    color: black;
+    font-size: 18px;
+    width: 50%;
+    float: center;
+}
+
+.container .textbox{
+    width: 50%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-bottom:1px solid #68bed8;
+    
+}
+
 </style>
