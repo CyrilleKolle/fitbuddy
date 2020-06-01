@@ -41,7 +41,7 @@ export default {
 <style scoped>
 
 .logo {
-  margin-left: 50px;
+  margin-left: 250px;
 }
 
 .fixedBox {
