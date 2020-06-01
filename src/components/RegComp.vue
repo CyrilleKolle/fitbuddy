@@ -24,8 +24,10 @@
             
             </div>
         </div>
+        <div class="button-reg">
             <br>
             <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/login' }">Registrera</b-button>
+        </div>
         </div>
         </div>
             
@@ -42,6 +44,10 @@ export default {
 
 .logo {
   margin-left: 250px;
+}
+
+.button-reg {
+    margin-left: 420px;
 }
 
 .fixedBox {
