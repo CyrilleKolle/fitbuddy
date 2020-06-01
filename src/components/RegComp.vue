@@ -52,6 +52,7 @@ export default {
   padding: 30px 40px;
   margin: 0 auto;
   box-sizing: border-box;
+  align-content: center;
 }
 
 .container h1{
