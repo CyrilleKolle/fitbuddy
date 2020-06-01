@@ -1,4 +1,5 @@
 <template>
+<div class="fixedBox">
   <div id="wrapper">
     <section>
       <div class="contact-form-container">
@@ -7,58 +8,61 @@
           <form @submit.prevent="onSubmit">
             <!-- titel -->
             <div class="box">
-              <label> Titel: <input v-model="title" placeholder="Vad vill du göra?" required /> </label>
+              <label> Titel för ditt pass: <input v-model="title" placeholder="Vad vill du göra?" required /> </label>
             </div>
 
             <!-- förvalda träningstyper m.h.a checkboxar -->
             <div class="workout-types">
-              <label><strong>träningstyp:</strong></label>
+              <label><strong>Träningstyp:</strong></label>
             <div class="block"> 
-                <b-checkbox v-model="checkboxGroup" native-value="Fotboll"> Fotboll </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Football"> Fotboll </b-checkbox>
                 <b-checkbox v-model="checkboxGroup" native-value="Tennis"> Tennis </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="Paddel"> Paddel </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="Löpning"> Löpning </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="cycling"> Cykling </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="run"> Löpning </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Bandy"> Bandy </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="swimming"> Simning </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="climbing"> Klättring </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Gym"> Gym </b-checkbox>
               </div>
             </div>
-
+            
             <!-- Användaren kan m.h.a av en kalender bestämma dag -->
             <div class="box">
               <label>
-                Kalender:
+                När vill du träna ?
                 <b-datetimepicker v-model="datetime" placeholder="Click to select...">
                   <template slot="left">
-                    <button class="button is-primary" @click="datetime = new Date()">
+                    <button class="button is-primary" @click="datetime = new Date()" >
                       <b-icon icon="clock"></b-icon>
-                      <span>Now</span>
+                      <span>Nutid  </span>
                     </button>
                   </template>
                   <template slot="right">
                     <button class="button is-danger" @click="datetime = null">
                       <b-icon icon="close"></b-icon>
-                      <span>Clear</span>
+                      <span>Töm  </span>
                     </button>
                   </template>
                 </b-datetimepicker>
               </label>
             </div>
 
-            <!-- Sätt en tid -->
+            <!-- Deltagare -->
             <div class="box">
-              <label>
-                Tid:
-                <input v-model="time" placeholder="Hur lång tid vill du träna?" />
+              <label> Hur många deltagere söker du ?
+                <b-numberinput v-model="participants" type="is-info" size="is-small" min="1" icon-pack="fas"></b-numberinput>
               </label>
             </div>
 
             <!-- Användaren kan här beskriva mer i detalj vad andra behöver veta -->
             <div class="box">
               <label>
-                Beskrivnig:
+                Kort beskrivning av vad ni vill göra! 
                 <textarea
                   v-model="description"
                   cols="30"
                   rows="10"
-                  placeholder="vad är det andra behöver veta för att kunna vara med ?"
+                  placeholder="Ska träna i slottskogen kl 10.00 vill någon haka på ?"
                   required
                 ></textarea>
               </label>
@@ -71,6 +75,7 @@
       </div>
     </section>
   </div>
+</div>
 </template>
 
 <script>
@@ -78,13 +83,11 @@ export default {
   data() {
     // datan som representer utgångs punkt av formulärets input-element
     return {
+        title: null,
         checkboxGroup: [],
-      //selectedSports: [],
-      //types: ["Fotboll", "Tennis", "paddel", "löpträning", "hockey", "bowling"],
-      title: null,
-      time: null,
-      description: null,
-      datetime: new Date()
+        datetime: new Date(),
+        participants: null,
+        description: null
     };
   },
   methods: {
@@ -92,19 +95,19 @@ export default {
         Denna method tar hand om datan registrerad av användaren efter att ha klickat på "submit"
         */
     onSubmit() {
-      console.log(this.title);
-      console.log(this.time);
-      console.log(this.description);
-      console.log("kalender" + this.datetime);
-      console.log("träningstyp" + this.selectedSports);
+      console.log("titel: " + this.title);
+      console.log("träningstyp: " + this.checkboxGroup);
+      console.log("kalender: " + this.datetime);
+      console.log("deltagare: " + this.participants);
+      console.log("beskrivning: " + this.description);
 
       // omkonverterar input från formuläret m.h.a v-model till ett Json-objekt och skickar mot express
       fetch("http://localhost:3000/post", {
         body: JSON.stringify({
           title: this.title,
-          workout: this.selectedSports,
-          calender: this.picker,
-          time: this.datetime,
+          workout: this.checkboxGroup,
+          calenderWithTime: this.datetime,
+          participants: this.participants,
           description: this.description
         }),
         headers: { "Content-Type": "application/json" },
@@ -116,6 +119,16 @@ export default {
 </script>
 
 <style scoped>
+.fixedBox {
+  position: static;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .main-container {
   margin: 0;
   padding: 0;
@@ -130,16 +143,7 @@ section {
 /* elemntet som håller hela formuläret förutom */
 
 .contact-form-container {
-  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
-  width: 85%;
-  max-width: 1000px;
-  padding: 30px 40px;
-  margin: 100px auto auto auto;
-  box-sizing: border-box;
-
-  color: black;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  border-radius: 10px;
+  margin: 0 auto;
 }
 
 /* Titel */
@@ -153,8 +157,9 @@ section {
 
 .box {
   border: 1px solid grey;
-  margin: 10px 50px;
+  margin: 10px auto;
   padding: 12px 18px;
+  width: 100%;
   border-radius: 8px;
 }
 /* Gör ändringar formulärets alla labels */
