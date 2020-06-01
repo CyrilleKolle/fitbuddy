@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar class="is-primary" fixed-top="true">
+    <b-navbar class="is-primary" fixed-top=true>
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
           <img
