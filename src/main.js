@@ -9,6 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Buefy from 'buefy'
 import { dom } from '@fortawesome/fontawesome-svg-core'
+
+import { VueElevator } from 'vue-elevator'
+import Paginate from 'vuejs-paginate'
+
+
+Vue.use(Paginate)
+Vue.component('paginate', Paginate)
+Vue.component('VueElevator', VueElevator)
+
+
+
 dom.watch()
 
 Vue.use(Buefy)
