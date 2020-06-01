@@ -7,21 +7,20 @@
           <form @submit.prevent="onSubmit">
             <!-- titel -->
             <div class="box">
-              <label>
-                Titel:
-                <input v-model="title" placeholder="Vad vill du göra?" required />
-              </label>
+              <label> Titel: <input v-model="title" placeholder="Vad vill du göra?" required /> </label>
             </div>
+
             <!-- förvalda träningstyper m.h.a checkboxar -->
             <div class="workout-types">
-              <label>
-                <strong>träningstyp:</strong>
-              </label>
-              <label :key="type" v-for="type in types">
-                <input v-model="selectedSports" type="checkbox" :value="type" />
-                {{ type }}
-              </label>
+              <label><strong>träningstyp:</strong></label>
+            <div class="block"> 
+                <b-checkbox v-model="checkboxGroup" native-value="Fotboll"> Fotboll </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Tennis"> Tennis </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Paddel"> Paddel </b-checkbox>
+                <b-checkbox v-model="checkboxGroup" native-value="Löpning"> Löpning </b-checkbox>
+              </div>
             </div>
+
             <!-- Användaren kan m.h.a av en kalender bestämma dag -->
             <div class="box">
               <label>
@@ -42,6 +41,7 @@
                 </b-datetimepicker>
               </label>
             </div>
+
             <!-- Sätt en tid -->
             <div class="box">
               <label>
@@ -49,6 +49,7 @@
                 <input v-model="time" placeholder="Hur lång tid vill du träna?" />
               </label>
             </div>
+
             <!-- Användaren kan här beskriva mer i detalj vad andra behöver veta -->
             <div class="box">
               <label>
@@ -62,6 +63,7 @@
                 ></textarea>
               </label>
             </div>
+
             <!-- knappen som skickar vidare datan registrerad mot databasen -->
             <input class="button" type="submit" value="skapa ditt träningspass" />
           </form>
@@ -76,8 +78,9 @@ export default {
   data() {
     // datan som representer utgångs punkt av formulärets input-element
     return {
-      selectedSports: [],
-      types: ["Fotboll", "Tennis", "paddel", "löpträning", "hockey", "bowling"],
+        checkboxGroup: [],
+      //selectedSports: [],
+      //types: ["Fotboll", "Tennis", "paddel", "löpträning", "hockey", "bowling"],
       title: null,
       time: null,
       description: null,

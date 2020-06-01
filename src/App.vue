@@ -1,13 +1,20 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-      <router-link to="/post">Post</router-link>
-      <router-link to="/signUp">Sign Up</router-link>
-      <router-link to="/profile">Profile</router-link>
-    </div>
-     -->
+    <b-navbar class="is-primary" fixed-top="true">
+      <template slot="brand">
+        <b-navbar-item tag="router-link" :to="{ path: '/' }">
+          <img
+            src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
+            alt="Lightweight UI components for Vue.js based on Bulma"
+          />
+        </b-navbar-item>
+      </template>
+      <template slot="start">
+        <b-navbar-item tag="router-link" :to="{ path: '/' }">Home</b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ path: '/post' }">Post</b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ path: '/profile' }">Profile</b-navbar-item>
+      </template>
+
 
     <b-navbar class="is-primary" fixed-top="true">
         <template slot="brand">
@@ -48,7 +55,6 @@
 </template>
 
 <style lang="scss">
-
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
 
@@ -60,16 +66,46 @@ $twitter-invert: findColorInvert($twitter);
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
-    "white": ($white, $black),
-    "black": ($black, $white),
-    "light": ($light, $light-invert),
-    "dark": ($dark, $dark-invert),
-    "primary": ($primary, $primary-invert),
-    "info": ($info, $info-invert),
-    "success": ($success, $success-invert),
-    "warning": ($warning, $warning-invert),
-    "danger": ($danger, $danger-invert),
-    "twitter": ($twitter, $twitter-invert)
+  "white": (
+    $white,
+    $black
+  ),
+  "black": (
+    $black,
+    $white
+  ),
+  "light": (
+    $light,
+    $light-invert
+  ),
+  "dark": (
+    $dark,
+    $dark-invert
+  ),
+  "primary": (
+    $primary,
+    $primary-invert
+  ),
+  "info": (
+    $info,
+    $info-invert
+  ),
+  "success": (
+    $success,
+    $success-invert
+  ),
+  "warning": (
+    $warning,
+    $warning-invert
+  ),
+  "danger": (
+    $danger,
+    $danger-invert
+  ),
+  "twitter": (
+    $twitter,
+    $twitter-invert
+  )
 );
 
 // Links
@@ -80,11 +116,22 @@ $link-focus-border: $primary;
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
-
 </style>
 
 <style>
-#app {
+
+.fixedBox {
+  position: sticky;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  height: 100vh;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -104,6 +151,20 @@ $link-focus-border: $primary;
 
 #nav a.router-link-exact-active {
   color: #42b983;
+} */
+
+/*
+body {
+  position: static;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  max-width: 1000px;
+  padding: 30px 40px;
+  justify-content: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+ 
 }
+*/
 
 </style>
