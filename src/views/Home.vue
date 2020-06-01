@@ -101,6 +101,7 @@
         </div>
         <hr>
         <paginate
+        id="pagination"
           :page-count="20"
           :page-range="3"
           :margin-pages="2"
@@ -109,6 +110,7 @@
           :next-text="'Next'"
           :container-class="'pagination'"
           :page-class="'page-item'"
+
         ></paginate>
       </div>
 <hr>
@@ -205,13 +207,28 @@ box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
 }
 
 .fixedBox {
-  position: static;
   box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   width: 85%;
+  left: 0;
+  right: 0;
   max-width: 1000px;
   padding: 30px 40px;
   margin: 0 auto;
-  box-sizing: border-box;
+  position: fixed;
+  align-content: center;
+}
+.home{
+    overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  scrollbar-width: none;
+}
+#pagination{
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
 
