@@ -1,58 +1,74 @@
 <template>
-  <div class="login">
-      <div class="logo">
-    <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px"  >
-      </div>
-    <div class="login-box">
-        <h1>Log in</h1>
-        <div class="textbox">
-            <input type="text" placeholder="Username" name="" value="">
+
+ <div>
+    <div class="fixedBox">
+        <div class="login">
+           <div class="logo">
+            <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px"  >
+          </div>  
+          <h1>Logga in</h1>
+      
+          <div class="textbox">
+            <input type="text" placeholder="Användarnamn" name="" value="">
             </div>
 
         <div class="textbox">
-            <input type="password" placeholder="Password" name="" value="">
+            <input type="password" placeholder="Lösenord" name="" value=""> <br>
+            
             </div>
-   <div class="button">     
-  <input class="btn-login" type="button" name="" value="Sign in">
-  <input class="btn-pass" type="button" name="" value="Forgot password?" >
-   </div>
-  </div>
-    </div>
+        </div>
+            <br>
+            <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/' }">Logga in</b-button>
+        </div>
+        </div>
+            
 </template>
 
 <script>
 export default {
-  name: "LogInComp"
+  name: "LogInComp",
+  methods: {
+            success() {
+                this.$buefy.toast.open({
+                    message: 'Inloggning lyckades!',
+                    type: 'is-twitter',
+                    position:'is-bottom',
+                    duration:2000,
+                   
+                })
+            },     
+        }
 };
+ 
 </script>
 
-<style scoped>
-.login-box {
-    padding-top: 200px;
-    width: 280px;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    
+<style>
+
+
+.logo {
+  margin-left: 250px;
 }
 
-.login-box h1{
-    float: left;
+.fixedBox {
+  position: static;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.login h1{
+    
     font-size: 40px;
-    border-bottom: 6px solid #4caf50;
-    margin-bottom: 50px;
+    border-bottom: 6px solid #68bed8;
     padding: 13px 0
-    
 }
 
-.login-box .textbox{
-    width: 100%;
-    overflow: hidden;
-    font-size: 20px;
-    padding: 8px 0;
-    margin: 8px 0;
-    border-bottom:1px solid #4caf50;
+
+.login h1,p{
+  text-align: center;
 }
 
 .textbox input{
@@ -61,26 +77,20 @@ export default {
     background:none;
     color: black;
     font-size: 18px;
-    width: 100%;
-    float: left;
+    width: 50%;
+    float: center;
 }
 
-.button .btn-login {
-    width: 100%;
-    background-color: #4caf50;
-    border: 2px solid white;
-    padding: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    margin: 12px 0;
-
+.login .textbox{
+    width: 50%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-bottom:1px solid #68bed8;
     
 }
-.button .btn-pass {
-    border:thick;
-    background-color: transparent;
-    font-style: italic;
-    text-decoration: underline;
-    color: blue;
-}
+
+
 </style>
