@@ -1,25 +1,20 @@
 <template>
-  <section>
-    <div class="block">
-      <b-checkbox v-model="checkboxGroup" native-value="Silver">Silver</b-checkbox>
-      <b-checkbox v-model="checkboxGroup" native-value="Flint">Flint</b-checkbox>
-      <b-checkbox v-model="checkboxGroup" native-value="Vane">Vane</b-checkbox>
-      <b-checkbox v-model="checkboxGroup" native-value="Billy" disabled>Billy</b-checkbox>
-    </div>
-    <p class="content">
-      <b>Selection:</b>
-      {{ checkboxGroup }}
-    </p>
-  </section>
+  <div class="fixedBox"></div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      checkboxGroup: ["Flint"]
-    };
-  }
-};
 </script>
 
+<style scoped>
+.fixedBox {
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  left: 0;
+  right: 0;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  position: fixed;
+  align-content: center;
+}
+</style>

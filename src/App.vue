@@ -1,15 +1,6 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-      <router-link to="/post">Post</router-link>
-      <router-link to="/signUp">Sign Up</router-link>
-      <router-link to="/profile">Profile</router-link>
-    </div>
-    -->
-
-    <b-navbar class="is-primary" fixed-top=true>
+    <b-navbar class="is-primary" fixed-top="true">
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
           <img
@@ -106,6 +97,18 @@ $link-focus-border: $primary;
 </style>
 
 <style>
+
+.fixedBox {
+  position: sticky;
+  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  width: 85%;
+  height: 100vh;
+  max-width: 1000px;
+  padding: 30px 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -140,4 +143,5 @@ body {
  
 }
 */
+
 </style>
