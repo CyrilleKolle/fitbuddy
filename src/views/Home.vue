@@ -227,8 +227,8 @@ box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   scrollbar-width: none;
 }
 #pagination{
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 </style>
 
