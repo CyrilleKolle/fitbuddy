@@ -1,6 +1,5 @@
 <template>
 
- <div>
     <div class="fixedBox">
         <div class="login">
            <div class="logo">
@@ -15,12 +14,13 @@
         <div class="textbox">
             <input type="password" placeholder="Lösenord" name="" value=""> <br>
             
-            </div>
         </div>
+        <div class="button-log">
             <br>
             <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/' }">Logga in</b-button>
         </div>
         </div>
+    </div>
             
 </template>
 
@@ -44,6 +44,19 @@ export default {
 
 <style>
 
+.login {
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  scrollbar-width: none;
+}
+
+.button-log {
+    margin-left: 420px;
+}
 
 .logo {
   margin-left: 250px;
@@ -74,7 +87,6 @@ export default {
 .textbox input{
     border: none;
     outline: none;
-    background:none;
     color: black;
     font-size: 18px;
     width: 50%;

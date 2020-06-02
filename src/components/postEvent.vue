@@ -1,6 +1,6 @@
 <template>
 <div class="fixedBox">
-  <div id="wrapper">
+  <div class="wrapper">
     <section>
       <div class="contact-form-container">
         <h1>Skapa ditt pass</h1>
@@ -69,7 +69,7 @@
             </div>
 
             <!-- knappen som skickar vidare datan registrerad mot databasen -->
-            <input class="button" type="submit" value="skapa ditt träningspass" />
+            <input class="button" type="submit" value="Skapa ditt träningspass" />
           </form>
         </div>
       </div>
@@ -120,13 +120,25 @@ export default {
 
 <style scoped>
 .fixedBox {
-  position: static;
   box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   width: 85%;
+  left: 0;
+  right: 0;
   max-width: 1000px;
   padding: 30px 40px;
   margin: 0 auto;
-  box-sizing: border-box;
+  position: fixed;
+  align-content: center;
+}
+
+.wrapper {
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  scrollbar-width: none;
 }
 
 .main-container {
@@ -144,6 +156,8 @@ section {
 
 .contact-form-container {
   margin: 0 auto;
+  box-shadow: none;
+  text-align: center;
 }
 
 /* Titel */
@@ -192,10 +206,10 @@ section {
 /* submit knappen */
 
 .button {
-  background-color: #421616;
+  background-color: rgb(64, 115, 255);
   width: 87%;
-  padding: 13px 0;
-  color: #dbdad8;
+  
+  color: white;
   font-size: 1.3rem;
   border-radius: 8px;
 }
