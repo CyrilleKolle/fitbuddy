@@ -6,7 +6,7 @@
           <!-- <img
             src="../assets/runningbuddy.png"
             alt="Fitbuddy logo"
-          /> -->
+          />-->
         </b-navbar-item>
       </template>
       <template slot="start">
@@ -16,14 +16,18 @@
       </template>
 
       <template slot="end">
-        <b-navbar-item>
+        <b-navbar-item tag="div">
           <div class="buttons" v-if="true">
             <b-navbar-item
               tag="router-link"
               :to="{ path: '/signUp' }"
-              class="button is-twitter"
+              class="button is-twitter specialbtn"
             >Registrera</b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{ path: '/login' }" class="button is-light">Logga in</b-navbar-item>
+            <b-navbar-item
+              tag="router-link"
+              :to="{ path: '/login' }"
+              class="button is-light"
+            >Logga in</b-navbar-item>
           </div>
         </b-navbar-item>
       </template>
@@ -37,12 +41,20 @@
 @import "~bulma/sass/utilities/_all";
 
 // Set your colors
+
 $primary: #68bed8;
 $primary-invert: findColorInvert($primary);
 $twitter: rgb(64, 115, 255);
 $twitter-invert: findColorInvert($twitter);
 
+// This is needed for the navbar buttons to not have a transparent backgroundcolor
+// when they are focused
+
+.specialbtn.navbar-item:focus {
+  background-color: $twitter !important;
+}
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
+
 $colors: (
   "white": (
     $white,
@@ -87,10 +99,10 @@ $colors: (
 );
 
 // Links
+
 $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
-$navbar-tab-active-background-color:$primary;
 
 // Import Bulma and Buefy styles
 @import "~bulma";
@@ -98,5 +110,4 @@ $navbar-tab-active-background-color:$primary;
 </style>
 
 <style>
-
 </style>

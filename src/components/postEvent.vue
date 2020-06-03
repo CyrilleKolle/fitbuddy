@@ -1,81 +1,93 @@
 <template>
-<div class="fixedBox">
-  <div class="wrapper">
-    <section>
-      <div class="contact-form-container">
-        <h1>Skapa ditt pass</h1>
-        <div class="contact-form">
-          <form @submit.prevent="onSubmit">
-            <!-- titel -->
-            <div class="box">
-              <label> Titel för ditt pass: <input v-model="title" placeholder="Vad vill du göra?" required /> </label>
-            </div>
-
-            <!-- förvalda träningstyper m.h.a checkboxar -->
-            <div class="workout-types">
-              <label><strong>Träningstyp:</strong></label>
-            <div class="block"> 
-                <b-checkbox v-model="checkboxGroup" native-value="Football"> Fotboll </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="Tennis"> Tennis </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="cycling"> Cykling </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="run"> Löpning </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="Bandy"> Bandy </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="swimming"> Simning </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="climbing"> Klättring </b-checkbox>
-                <b-checkbox v-model="checkboxGroup" native-value="Gym"> Gym </b-checkbox>
+  <div class="fixedBox">
+    <div class="wrapper">
+      <section>
+        <div class="contact-form-container">
+          <h1>Skapa ditt pass</h1>
+          <div class="contact-form">
+            <form @submit.prevent="onSubmit">
+              <!-- titel -->
+              <div class="box">
+                <label>
+                  Titel för ditt pass:
+                  <input v-model="title" placeholder="Vad vill du göra?" required />
+                </label>
               </div>
-            </div>
-            
-            <!-- Användaren kan m.h.a av en kalender bestämma dag -->
-            <div class="box">
-              <label>
-                När vill du träna ?
-                <b-datetimepicker v-model="datetime" placeholder="Click to select...">
-                  <template slot="left">
-                    <button class="button is-primary" @click="datetime = new Date()" >
-                      <b-icon icon="clock"></b-icon>
-                      <span>Nutid  </span>
-                    </button>
-                  </template>
-                  <template slot="right">
-                    <button class="button is-danger" @click="datetime = null">
-                      <b-icon icon="close"></b-icon>
-                      <span>Töm  </span>
-                    </button>
-                  </template>
-                </b-datetimepicker>
-              </label>
-            </div>
 
-            <!-- Deltagare -->
-            <div class="box">
-              <label> Hur många deltagere söker du ?
-                <b-numberinput v-model="participants" type="is-info" size="is-small" min="1" icon-pack="fas"></b-numberinput>
-              </label>
-            </div>
+              <!-- förvalda träningstyper m.h.a checkboxar -->
+              <div class="workout-types">
+                <label>
+                  <strong>Träningstyp:</strong>
+                </label>
+                <div class="block">
+                  <b-checkbox v-model="checkboxGroup" native-value="Football">Fotboll</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="Tennis">Tennis</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="cycling">Cykling</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="run">Löpning</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="Bandy">Bandy</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="swimming">Simning</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="climbing">Klättring</b-checkbox>
+                  <b-checkbox v-model="checkboxGroup" native-value="Gym">Gym</b-checkbox>
+                </div>
+              </div>
 
-            <!-- Användaren kan här beskriva mer i detalj vad andra behöver veta -->
-            <div class="box">
-              <label>
-                Kort beskrivning av vad ni vill göra! 
-                <textarea
-                  v-model="description"
-                  cols="30"
-                  rows="10"
-                  placeholder="Ska träna i slottskogen kl 10.00 vill någon haka på ?"
-                  required
-                ></textarea>
-              </label>
-            </div>
+              <!-- Användaren kan m.h.a av en kalender bestämma dag -->
+              <div class="box">
+                <label>
+                  När vill du träna ?
+                  <b-datetimepicker v-model="datetime" placeholder="Click to select...">
+                    <template slot="left">
+                      <button class="button is-primary" @click="datetime = new Date()">
+                        <b-icon icon="clock"></b-icon>
+                        <span>Nutid</span>
+                      </button>
+                    </template>
+                    <template slot="right">
+                      <button class="button is-danger" @click="datetime = null">
+                        <b-icon icon="close"></b-icon>
+                        <span>Töm</span>
+                      </button>
+                    </template>
+                  </b-datetimepicker>
+                </label>
+              </div>
 
-            <!-- knappen som skickar vidare datan registrerad mot databasen -->
-            <input class="button" type="submit" value="Skapa ditt träningspass" />
-          </form>
+              <!-- Deltagare -->
+              <div class="box">
+                <label>
+                  Hur många deltagere söker du ?
+                  <b-numberinput
+                    v-model="participants"
+                    type="is-info"
+                    size="is-small"
+                    min="1"
+                    icon-pack="fas"
+                  ></b-numberinput>
+                </label>
+              </div>
+
+              <!-- Användaren kan här beskriva mer i detalj vad andra behöver veta -->
+              <div class="box">
+                <label>
+                  Kort beskrivning av vad ni vill göra!
+                  <textarea
+                    v-model="description"
+                    cols="30"
+                    rows="10"
+                    placeholder="Ska träna i slottskogen kl 10.00 vill någon haka på ?"
+                    required
+                  ></textarea>
+                </label>
+              </div>
+
+              <!-- knappen som skickar vidare datan registrerad mot databasen -->
+              <input class="button" type="submit" value="Skapa ditt träningspass" />
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -83,11 +95,11 @@ export default {
   data() {
     // datan som representer utgångs punkt av formulärets input-element
     return {
-        title: null,
-        checkboxGroup: [],
-        datetime: new Date(),
-        participants: null,
-        description: null
+      title: null,
+      checkboxGroup: [],
+      datetime: new Date(),
+      participants: null,
+      description: null
     };
   },
   methods: {
@@ -127,7 +139,7 @@ export default {
   max-width: 1000px;
   padding: 30px 40px;
   margin: 0 auto;
-  position: fixed;
+  position: static;
   align-content: center;
 }
 
@@ -208,7 +220,7 @@ section {
 .button {
   background-color: rgb(64, 115, 255);
   width: 87%;
-  
+
   color: white;
   font-size: 1.3rem;
   border-radius: 8px;
