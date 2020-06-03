@@ -70,7 +70,7 @@ export default {
   max-width: 1000px;
   padding: 30px 40px;
   margin: 0 auto;
-  position: fixed;
+  position: static;
   align-content: center;
 }
 .profile {

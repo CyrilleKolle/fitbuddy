@@ -1,49 +1,44 @@
 <template>
+  <div class="fixedBox">
+    <div class="login">
+      <div class="logo">
+        <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px" />
+      </div>
+      <h1>Logga in</h1>
 
-    <div class="fixedBox">
-        <div class="login">
-           <div class="logo">
-            <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px"  >
-          </div>  
-          <h1>Logga in</h1>
-      
-          <div class="textbox">
-            <input type="text" placeholder="Användarnamn" name="" value="">
-            </div>
+      <div class="textbox">
+        <input type="text" placeholder="Användarnamn" name value />
+      </div>
 
-        <div class="textbox">
-            <input type="password" placeholder="Lösenord" name="" value=""> <br>
-            
-        </div>
-        <div class="button-log">
-            <br>
-            <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/' }">Logga in</b-button>
-        </div>
-        </div>
+      <div class="textbox">
+        <input type="password" placeholder="Lösenord" name value />
+        <br />
+      </div>
+      <div class="button-log">
+        <br />
+        <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/' }">Logga in</b-button>
+      </div>
     </div>
-            
+  </div>
 </template>
 
 <script>
 export default {
   name: "LogInComp",
   methods: {
-            success() {
-                this.$buefy.toast.open({
-                    message: 'Inloggning lyckades!',
-                    type: 'is-twitter',
-                    position:'is-bottom',
-                    duration:2000,
-                   
-                })
-            },     
-        }
+    success() {
+      this.$buefy.toast.open({
+        message: "Inloggning lyckades!",
+        type: "is-twitter",
+        position: "is-bottom",
+        duration: 2000
+      });
+    }
+  }
 };
- 
 </script>
 
 <style>
-
 .login {
   overflow-y: auto;
   height: 100%;
@@ -55,7 +50,7 @@ export default {
 }
 
 .button-log {
-    margin-left: 420px;
+  margin-left: 420px;
 }
 
 .logo {
@@ -72,37 +67,33 @@ export default {
   box-sizing: border-box;
 }
 
-.login h1{
-    
-    font-size: 40px;
-    border-bottom: 6px solid #68bed8;
-    padding: 13px 0
+.login h1 {
+  font-size: 40px;
+  border-bottom: 6px solid #68bed8;
+  padding: 13px 0;
 }
 
-
-.login h1,p{
+.login h1,
+p {
   text-align: center;
 }
 
-.textbox input{
-    border: none;
-    outline: none;
-    color: black;
-    font-size: 18px;
-    width: 50%;
-    float: center;
+.textbox input {
+  border: none;
+  outline: none;
+  color: black;
+  font-size: 18px;
+  width: 50%;
+  float: center;
 }
 
-.login .textbox{
-    width: 50%;
-    overflow: hidden;
-    font-size: 20px;
-    padding: 10px;
-    margin: 0 auto;
-    margin-top: 10px;
-    border-bottom:1px solid #68bed8;
-    
+.login .textbox {
+  width: 50%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-top: 10px;
+  border-bottom: 1px solid #68bed8;
 }
-
-
 </style>
