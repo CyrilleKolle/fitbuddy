@@ -10,8 +10,45 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    username: {
+      get() {
+        return this.$store.state.username;
+      },
+      set(username) {
+        this.$store.commit("setUserName", username);
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.password;
+      },
+      set(password) {
+        this.$store.commit("setUserPassword", password);
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        })
+      }).then(result => {
+        console.log(this.username, this.password);
+        console.log(result);
+      });
+    }
   }
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

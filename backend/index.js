@@ -31,6 +31,13 @@ app.post('/login', (request, response) => {
     })
 })
 
+app.get('/posts', (request, response) => {
+    database.all('SELECT * FROM posts').then(posts => {
+        response.send(posts)
+    })
+})
+
+
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
     .then((database_) => {
         database = database_
