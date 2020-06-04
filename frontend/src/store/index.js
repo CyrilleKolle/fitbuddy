@@ -25,8 +25,6 @@ export default new Vuex.Store({
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }],
 
-    events: [{ id: 1, name: 'Football', description: 'Looking for a football buddy around heden', time: '12:00', date: 'Mon 23' }],
-
     counter: 0,
     password: null,
     username: null,
@@ -43,8 +41,13 @@ export default new Vuex.Store({
     limit: null,
     checkboxGroup: [],
     datetime: new Date(),
+<<<<<<< HEAD
     participants: null
    
+=======
+    participants: null,
+
+>>>>>>> 89587558dc4af2e86a584e3144dbf2634ad5c31d
 
 
   },
@@ -65,12 +68,6 @@ export default new Vuex.Store({
     setLastname(state, payload) {
       state.lastname = payload
     },
-    setTitle(state, title) {
-      state.title = title
-    },
-    setDescription(state, description) {
-      state.description = description
-    },
     setTimestamp(state, timestamp) {
       state.timestamp = timestamp
     },
@@ -87,7 +84,7 @@ export default new Vuex.Store({
       state.attendies = attendies
     },
     setLimit(state, limit) {
-      state.limit = limit 
+      state.limit = limit
     },
     setTitle(state, payload) {
       state.title = payload
@@ -105,7 +102,7 @@ export default new Vuex.Store({
       state.description = payload
     }
   },
-  
+
   actions: {
   },
   modules: {
