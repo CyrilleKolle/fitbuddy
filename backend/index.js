@@ -10,6 +10,7 @@ let database
 app.use(express.static(path.join(path.resolve(), 'public')))
 app.use(express.json())
 app.use(cors())
+
 app.use((request, response, next) => {
     response.header('Access-Control-Allow-Origin', '*')
     response.header('Access-Control-Allow-Methods', '')

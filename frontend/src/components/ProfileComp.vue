@@ -13,12 +13,16 @@
         <b-button class="is-twitter">Välj en bild</b-button>
       </div>
       <div class="inputdiv">
-        <b-field label="Namn"></b-field>
-        <input type="text" placeholder="Skriv in ditt namn" value />
+        <b-field label="Email"></b-field>
+        <input type="email" placeholder="Skriv in din email" value />
+      </div>
+      <div class="inputdiv">
+        <b-field label="Telefonnummer"></b-field>
+        <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required />
       </div>
       <div class="inputdiv">
         <b-field label="Ålder">
-          <input type="text" placeholder="Skriv in din ålder" value />
+          <input type="number" placeholder="Skriv in din ålder" min="16" />
         </b-field>
       </div>
       <div class="genderdiv">
