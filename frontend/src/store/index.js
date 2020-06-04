@@ -30,6 +30,8 @@ export default new Vuex.Store({
     counter: 0,
     password: null,
     username: null,
+    firstname: null,
+    lastname: null,
     title: null,
     description: null,
     city: null,
@@ -44,6 +46,7 @@ export default new Vuex.Store({
     participants: null,
     description: null
 
+
   },
 
   mutations: {
@@ -56,7 +59,12 @@ export default new Vuex.Store({
     setUserPassword(state, payload) {
       state.password = payload
     },
-
+    setFirstname(state, payload) {
+      state.firstname = payload
+    },
+    setLastname(state, payload) {
+      state.lastname = payload
+    },
     setTitle(state, title) {
       state.title = title
     },
@@ -79,8 +87,8 @@ export default new Vuex.Store({
       state.attendies = attendies
     },
     setLimit(state, limit) {
-      state.limit = limit
-
+      state.limit = limit 
+    },
     setTitle(state, payload) {
       state.title = payload
     },
@@ -95,9 +103,9 @@ export default new Vuex.Store({
     },
     setDescription(state, payload) {
       state.description = payload
-
     }
   },
+  
   actions: {
   },
   modules: {
