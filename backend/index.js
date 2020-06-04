@@ -38,6 +38,14 @@ app.get('/posts', (request, response) => {
     })
 })
 
+app.put('/posts', (request, response) => {
+    database.run('UPDATE * FROM posts WHERE postId = 1')
+    .then(attends =>
+        {
+            response.send(attends)
+        })
+})
+
 
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
     .then((database_) => {

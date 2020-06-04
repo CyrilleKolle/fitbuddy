@@ -83,11 +83,11 @@
       </section>
 
       <div id="feedId">
-        <div
+        <!-- <div
           v-for="(event, i) in events"
           :key="`${i}-${event.id}`"
           class="contact-form-container"
-          fixed-top="true"
+          :fixed-top="true"
         >
           <span id="event-name">{{event.name}}</span>
           <br />
@@ -98,10 +98,29 @@
           <span id="event-date">{{event.date}}</span>
 
           <p id="more-info">...more</p>
+        </div>-->
+
+        <div
+          v-for="(post, index) in allPosts"
+          :key="`${index}-${post.id}`"
+          class="contact-form-container"
+          :fixed-top="true"
+        >
+          <div>{{post.title}}</div>
+          <div>{{post.description}}</div>
+          <div>{{post.city}}</div>
+          <div>{{post.timestamp}}</div>
+          <div>{{post.duration}} Hours</div>
+          <div>{{post.activity}}</div>
+          <div>{{post.other}}</div>
+          <div>{{post.attendies}}</div>
+
+          <button @click="attend(1)" id="attend-button" >attend</button>
+          <span>{{$store.state.counter}}</span>
         </div>
-        <hr>
+        <hr />
         <paginate
-        id="pagination"
+          id="pagination"
           :page-count="20"
           :page-range="3"
           :margin-pages="2"
@@ -110,10 +129,9 @@
           :next-text="'Next'"
           :container-class="'pagination'"
           :page-class="'page-item'"
-
         ></paginate>
       </div>
-<hr>
+      <hr />
       <div id="app">
         <VueElevator :duration="duration"></VueElevator>
       </div>
@@ -137,13 +155,16 @@ export default {
     }
   },
   methods: {
-    increment(amount) {
+    attend(amount) {
+      console.log(this.$store.state.counter);
+      console.log(this.participants);
       return this.$store.commit("joinMutation", amount);
     },
     clickCallback(pageNum) {
       console.log(pageNum);
     }
   },
+
   data() {
     return {
       open: false,
@@ -154,13 +175,21 @@ export default {
       right: true,
       total: this.$store.state.events,
       pages: 10,
-      duration: 4000
+      duration: 4000,
+      allPosts: null,
+      participants: 0,
+      press: true
     };
   },
   created() {
-    // for (let i = 0; i <= this.$store.state.events.length; i++) {
-    //   this.total.push(i);
-    //   console.log(this.items);
+    fetch("/api/posts")
+      .then(response => response.json())
+      .then(result => {
+        this.allPosts = result;
+        this.participants = result[0].attendies;
+        console.log(result[0].attendies);
+        console.log(this.participants);
+      });
   }
 };
 </script>
@@ -171,23 +200,9 @@ export default {
 #interest {
   columns: auto;
 }
-/* #feedId{
-box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
-  width: 85%;
-  max-width: 1000px;
-  padding: 30px 40px;
-  margin: 100px auto auto auto;
-  box-sizing: border-box;
-  height: 700px;
-  color: black;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  border-radius: 10px;
-  position: static;
-    scroll-behavior: smooth;
-  
- 
-
-} */
+#attend-button {
+  background-color: rgb(166, 240, 166);
+}
 .contact-form-container {
   box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   width: 85%;
@@ -217,8 +232,8 @@ box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   position: fixed;
   align-content: center;
 }
-.home{
-    overflow-y: auto;
+.home {
+  overflow-y: auto;
   height: 100%;
   width: 100%;
   left: 0;
@@ -226,7 +241,7 @@ box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   margin: 0 auto;
   scrollbar-width: none;
 }
-#pagination{
+#pagination {
   margin-left: 10%;
   margin-right: 10%;
 }

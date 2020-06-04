@@ -20,7 +20,7 @@ export default new Vuex.Store({
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }, { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }
-        , { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
+        , { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0, counter: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }],
@@ -41,18 +41,13 @@ export default new Vuex.Store({
     limit: null,
     checkboxGroup: [],
     datetime: new Date(),
-<<<<<<< HEAD
-    participants: null
-   
-=======
     participants: null,
-
->>>>>>> 89587558dc4af2e86a584e3144dbf2634ad5c31d
 
 
   },
 
   mutations: {
+
     joinMutation(state, counter) {
       state.counter += counter
     },
