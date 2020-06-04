@@ -92,15 +92,48 @@
 
 <script>
 export default {
-  data() {
-    // datan som representer utgångs punkt av formulärets input-element
-    return {
-      title: null,
-      checkboxGroup: [],
-      datetime: new Date(),
-      participants: null,
-      description: null
-    };
+  // datan som representer utgångs punkt av formulärets input-element
+  computed: {
+    title: {
+      get() {
+        return this.$store.state.title;
+      },
+      set(title) {
+        this.$store.commit("setTitle", title);
+      }
+    },
+    checkboxGroup: {
+      get() {
+        return this.$store.state.checkboxGroup;
+      },
+      set(checkboxGroup) {
+        this.$store.commit("setCheckboxGroup", checkboxGroup);
+      }
+    },
+    datetime: {
+      get() {
+        return this.$store.state.datetime;
+      },
+      set(datetime) {
+        this.$store.commit("setDatetime", datetime);
+      }
+    },
+    participants: {
+      get() {
+        return this.$store.state.participants;
+      },
+      set(participants) {
+        this.$store.commit("setParticipants", participants);
+      }
+    },
+    description: {
+      get() {
+        return this.$store.state.description;
+      },
+      set(description) {
+        this.$store.commit("setDescription", description);
+      }
+    }
   },
   methods: {
     /*
@@ -127,7 +160,7 @@ export default {
       });
     }
   }
-};
+}
 </script>
 
 <style scoped>
