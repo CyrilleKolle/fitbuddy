@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar class="is-primary" fixed-top="true">
+    <b-navbar class="is-primary" :fixed-top="true">
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
           <!-- <img
@@ -53,7 +53,6 @@ $twitter-invert: findColorInvert($twitter);
 .specialbtn.navbar-item:focus {
   background-color: $twitter !important;
 }
-// Setup $colors to use as bulma classes (e.g. 'is-twitter')
 
 $colors: (
   "white": (
@@ -109,5 +108,3 @@ $link-focus-border: $primary;
 @import "~buefy/src/scss/buefy";
 </style>
 
-<style>
-</style>

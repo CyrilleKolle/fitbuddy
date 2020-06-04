@@ -5,19 +5,19 @@
         <img alt="Fitbuddy logo" src="../assets/runningbuddy.png" height="300px" width="500px" />
       </div>
       <h1>Logga in</h1>
-
       <div class="textbox">
-        <input type="text" placeholder="Användarnamn" name value />
+        <input type="text" placeholder="Användarnamn" v-model="username" />
       </div>
-
       <div class="textbox">
-        <input type="password" placeholder="Lösenord" name value />
+        <input type="password" placeholder="Lösenord" v-model="password" />
         <br />
       </div>
       <div class="button-log">
         <br />
-        <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/' }">Logga in</b-button>
+        <b-button class="is-twitter" @click="onSubmit()">Logga in</b-button>
       </div>
+      <div v-if="authenticationProblem">Fel användarnamn eller lösenord!</div>
+      {{ someArray }}
     </div>
   </div>
 </template>
@@ -25,13 +25,45 @@
 <script>
 export default {
   name: "LogInComp",
+  data() {
+    return {
+      authenticationProblem: false,
+      loggedInAsUser: null,
+      someArray: null
+    };
+  },
+  computed: {
+    username: {
+      get() {
+        return this.$store.state.username;
+      },
+      set(username) {
+        this.$store.commit("setUserName", username);
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.password;
+      },
+      set(password) {
+        this.$store.commit("setUserPassword", password);
+      }
+    }
+  },
   methods: {
-    success() {
-      this.$buefy.toast.open({
-        message: "Inloggning lyckades!",
-        type: "is-twitter",
-        position: "is-bottom",
-        duration: 2000
+    onSubmit() {
+      fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        })
+      }).then(result => {
+        console.log(this.username, this.password);
+        console.log(result);
       });
     }
   }
