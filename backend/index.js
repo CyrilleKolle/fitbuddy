@@ -10,6 +10,7 @@ let database
 app.use(express.static(path.join(path.resolve(), 'public')))
 app.use(express.json())
 app.use(cors())
+
 app.use((request, response, next) => {
     response.header('Access-Control-Allow-Origin', '*')
     response.header('Access-Control-Allow-Methods', '')
@@ -30,6 +31,13 @@ app.post('/login', (request, response) => {
 
     })
 })
+
+app.get('/posts', (request, response) => {
+    database.all('SELECT * FROM posts').then(posts => {
+        response.send(posts)
+    })
+})
+
 
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
     .then((database_) => {
