@@ -8,25 +8,25 @@
           <h1>Registrera</h1>
       
          <div class="textbox">
-            <input type="text" placeholder="Förnamn" name="" value="">
+            <input type="text" placeholder="Förnamn" v-model="firstname">
             </div>
 
             <div class="textbox">
-            <input type="text" placeholder="Efternamn" name="" value="">
+            <input type="text" placeholder="Efternamn" v-model="lastname">
             </div>
 
           <div class="textbox">
-            <input type="text" placeholder="Användarnamn" name="" value="">
+            <input type="text" placeholder="Användarnamn" v-model="username">
             </div>
 
         <div class="textbox">
-            <input type="password" placeholder="Lösenord" name="" value=""> <br>
+            <input type="password" placeholder="Lösenord" v-model="password"> <br>
             
             </div>
         </div>
         <div class="button-reg">
             <br>
-            <b-button @click="success" class="is-twitter" tag="router-link" :to="{ path: '/login' }">Registrera</b-button>
+            <b-button @click="onSubmit" class="is-twitter">Registrera</b-button>
         </div>
         </div>
         </div>
@@ -36,7 +36,61 @@
 <script>
 export default {
   name: 'RegComp',
+  computed: {
+    username: {
+      get() {
+        return this.$store.state.username;
+      },
+      set(username) {
+        this.$store.commit("setUserName", username);
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.password;
+      },
+      set(password) {
+        this.$store.commit("setUserPassword", password);
+      }
+    },
+    firstname: {
+      get() {
+        return this.$store.state.firstname;
+      },
+      set(firstname) {
+        this.$store.commit("setFirstname", firstname);
+      }
+    },
+    lastname: {
+      get() {
+        return this.$store.state.lastname;
+      },
+      set(lastname) {
+        this.$store.commit("setLastname", lastname);
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          firstname: this.firstname,
+          lastname: this.lastname
+        })
+      }).then(result => {
+        console.log(this.firstname, this.lastname, this.username, this.password);
+        console.log(result);
+      });
+    }
+  }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

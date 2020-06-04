@@ -24,7 +24,10 @@ export default new Vuex.Store({
     { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }],
     counter: 0,
     password: null,
-    username: null
+    username: null,
+    firstname: null,
+    lastname: null
+
   },
 
 
@@ -37,6 +40,12 @@ export default new Vuex.Store({
     },
     setUserPassword(state, payload) {
       state.password = payload
+    },
+    setFirstname(state, payload) {
+      state.firstname = payload
+    },
+    setLastname(state, payload) {
+      state.lastname = payload
     }
   },
   actions: {
