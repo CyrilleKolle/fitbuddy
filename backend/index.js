@@ -38,6 +38,33 @@ app.get('/posts', (request, response) => {
     })
 })
 
+app.put('/profile', (request, response) => {
+    console.log('test')
+    database
+        .all('SELECT 1 FROM users WHERE username=? AND password=?', [request.body.username, request.body.password])
+        .then((rows) => {
+            if (rows.length === 1) {
+                // Correct user name and password
+                database
+                    .run('UPDATE users SET email=?,phone=?,birthyear=?, gender=?,city=? WHERE username=?', [
+                        request.body.email,
+                        request.body.phone,
+                        request.body.birthyear,
+                        request.body.gender,
+                        request.body.city,
+                        request.body.username
+                    ])
+                    .then(() => {
+                        response.status(201).send('DET FUNKAR GÖTT!')
+                        console.log(response);
+                    })
+
+            } else {
+                response.status(401).send('Tyvärr du är en noob!')
+            }
+        })
+})
+
 
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
     .then((database_) => {
