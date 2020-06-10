@@ -6,6 +6,7 @@ const path = require('path')
 const cors = require('cors')
 
 
+
 let database
 app.use(express.static(path.join(path.resolve(), 'public')))
 app.use(express.json())
@@ -38,13 +39,42 @@ app.get('/posts', (request, response) => {
     })
 })
 
-app.put('/posts', (request, response) => {
-    database.run('UPDATE * FROM posts WHERE postId = 1')
-    .then(attends =>
-        {
-            response.send(attends)
-        })
+app.get('/posts/:postId', (request, response) => {
+    database.all('SELECT * FROM posts WHERE postId=?', [request.params.postId]).then(posts => {
+        response.send(posts)
+    })
 })
+
+app.put('/attends', (request, response) => {
+    database.all('UPDATE posts SET counter=? WHERE postId=?', [request.body.counter, request.body.postId
+    ]).then(attends => {
+        response.send(attends)
+    })
+})
+
+app.get('/posts', (request, response) => {
+    database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
+        response.send(filterCities)
+    })
+})
+
+
+
+// sqlite
+//     .open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
+
+//     .then(database => {
+//         database
+//             .run('UPDATE posts SET counter=? WHERE postId=?', [
+//                 0,
+//                 1
+//             ])
+//             .then(() => {
+
+//             })
+//     })
+
+
 
 
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })

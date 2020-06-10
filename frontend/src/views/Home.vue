@@ -23,40 +23,38 @@
             />-->
             <b-menu>
               <b-menu-list label="Filter">
-                <b-menu-item icon="information-outline" label="Info"></b-menu-item>
+                <!-- <b-menu-item icon="information-outline" label="Info"></b-menu-item> -->
                 <b-menu-item icon="settings">
                   <template slot="label" slot-scope="props">
-                    Administrator
+                    City
                     <b-icon
                       class="is-pulled-right"
                       :icon="props.expanded ? 'menu-down' : 'menu-up'"
                     ></b-icon>
                   </template>
-                  <b-menu-item icon="account" label="Users"></b-menu-item>
-                  <b-menu-item icon="cellphone-link">
-                    <template slot="label">
-                      Devices
-                      <b-dropdown
-                        aria-role="list"
-                        class="is-pulled-right"
-                        position="is-bottom-left"
-                      >
-                        <b-icon icon="dots-vertical" slot="trigger"></b-icon>
-                        <b-dropdown-item aria-role="listitem">Action</b-dropdown-item>
-                        <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
-                        <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
-                      </b-dropdown>
-                    </template>
-                  </b-menu-item>
-                  <b-menu-item icon="cash-multiple" label="Payments" disabled></b-menu-item>
+
+                  <b-menu-item icon="account" label="Show all" @click="filterAll()"></b-menu-item>
+                  <b-menu-item icon="account" label="Gothenburg" @click="filterGbg()"></b-menu-item>
+                  <b-menu-item icon="cash-multiple" label="Stockholm" @click="filterSth()"></b-menu-item>
+                  <b-menu-item icon="account" label="Malmo" @click="filterMal()"></b-menu-item>
                 </b-menu-item>
-                <b-menu-item icon="account" label="My Account">
-                  <b-menu-item label="Account data"></b-menu-item>
-                  <b-menu-item label="Addresses"></b-menu-item>
+                <b-menu-item icon="account" label="Activities">
+                  <b-menu-item label="Football" @click="football()"></b-menu-item>
+                  <b-menu-item label="Handball" @click="handball()"></b-menu-item>
+                  <b-menu-item label="basketball" @click="basketball()"></b-menu-item>
+                  <b-menu-item label="Pool" @click="pool()"></b-menu-item>
+                  <b-menu-item label="Runing"></b-menu-item>
                 </b-menu-item>
               </b-menu-list>
               <b-menu-list>
-                <b-menu-item label="Expo" icon="link" tag="router-link" target="_blank" to="/expo"></b-menu-item>
+                <b-menu-item
+                  label="Expo"
+                  icon="link"
+                  tag="router-link"
+                  target="_blank"
+                  to="/expo"
+                  style="visibility: hidden"
+                ></b-menu-item>
               </b-menu-list>
               <b-menu-list label="Actions">
                 <b-menu-item label="Logout"></b-menu-item>
@@ -83,23 +81,6 @@
       </section>
 
       <div id="feedId">
-        <!-- <div
-          v-for="(event, i) in events"
-          :key="`${i}-${event.id}`"
-          class="contact-form-container"
-          :fixed-top="true"
-        >
-          <span id="event-name">{{event.name}}</span>
-          <br />
-          <span id="event-des">{{event.description}}</span>
-          <br />
-          <span id="event-time">{{event.time}}</span>
-          <br />
-          <span id="event-date">{{event.date}}</span>
-
-          <p id="more-info">...more</p>
-        </div>-->
-
         <div
           v-for="(post, index) in allPosts"
           :key="`${index}-${post.id}`"
@@ -113,10 +94,15 @@
           <div>{{post.duration}} Hours</div>
           <div>{{post.activity}}</div>
           <div>{{post.other}}</div>
-          <div>{{post.attendies}}</div>
 
-          <button @click="attend(1)" id="attend-button" >attend</button>
-          <span>{{$store.state.counter}}</span>
+          <div>{{post.postId}}</div>
+
+          <button
+            @click="increaseAttend(post.postId)"
+            id="attend-button"
+            :disabled=" localCounter === post.attendies"
+          >attend</button>
+          <span style="border: 1px solid black">{{post.counter}}/{{post.attendies}}</span>
         </div>
         <hr />
         <paginate
@@ -140,7 +126,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
@@ -151,17 +136,128 @@ export default {
   computed: {
     events() {
       console.log("join pressed");
-      return this.$store.state.events;
+      return this.$store.state.events.counter;
     }
   },
   methods: {
-    attend(amount) {
-      console.log(this.$store.state.counter);
-      console.log(this.participants);
-      return this.$store.commit("joinMutation", amount);
+    increaseAttend(postId) {
+      fetch(`/api/posts/${postId}`)
+        .then(response => response.json())
+        .then(result => {
+          this.localCounter = result[0].counter;
+          this.localCounter++;
+          fetch("/api/attends", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              counter: this.localCounter,
+              postId: postId
+            })
+          });
+        });
     },
+    // filterC(filterCity){
+    //   fetch(`/api/posts/${}`)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     this.city = result[0].city
+    //      console.log("this is actual city " + this.city)
+    //   });
+    // },
+
     clickCallback(pageNum) {
       console.log(pageNum);
+    },
+    filterGbg() {
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].city === this.gothenburg) {
+          this.cityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.cityFiltered);
+      this.allPosts = this.cityFiltered;
+      return this.cityFiltered;
+    },
+    filterSth() {
+      this.allPosts = [];
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].city === this.stockholm) {
+          this.cityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.cityFiltered);
+      this.allPosts = this.cityFiltered;
+      return this.cityFiltered;
+    },
+
+    filterMal() {
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].city === this.malmo) {
+          this.cityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.cityFiltered);
+      this.allPosts = this.cityFiltered;
+      return this.cityFiltered;
+    },
+    filterAll() {
+      this.cityFiltered = this.allPosts;
+      console.log(this.cityFiltered);
+      this.allPosts = this.cityFiltered;
+      return this.cityFiltered;
+    },
+    football() {
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].activity === this.foot) {
+          this.activityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.activityFiltered);
+      this.allPosts = this.activityFiltered;
+      return this.activityFiltered;
+    },
+    handball() {
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].activity === this.hand) {
+          this.activityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.activityFiltered);
+      this.allPosts = this.activityFiltered;
+      return this.activityFiltered;
+    },
+        pool() {
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].activity === this.pooll) {
+          this.activityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.activityFiltered);
+      this.allPosts = this.activityFiltered;
+      return this.activityFiltered;
+    },
+    basketball(){
+      for (let i = 0; i < this.allPosts.length; i++) {
+        if (this.allPosts[i].activity === this.basket) {
+          this.activityFiltered.push(this.allPosts[i]);
+        }
+      }
+      console.log(this.activityFiltered);
+      this.allPosts = this.activityFiltered;
+      return this.activityFiltered;
+    }
+
+  },
+  mutations: {
+    counta: {
+      get() {
+        return this.$store.state.counter;
+      },
+      set(counta) {
+        this.$store.comit("countMutation", counta);
+      }
     }
   },
 
@@ -177,8 +273,21 @@ export default {
       pages: 10,
       duration: 4000,
       allPosts: null,
+      postId: null,
+      localCounter: null,
       participants: 0,
-      press: true
+      counta: 0,
+      uniqueId: null,
+      city: null,
+      gothenburg: "gothenburg",
+      stockholm: "stockholm",
+      malmo: "malmo",
+      hand: "Handball",
+      foot: "Football",
+      pooll: "pool",
+      basket: "Basketball",
+      cityFiltered: [],
+      activityFiltered: []
     };
   },
   created() {
@@ -186,9 +295,15 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.allPosts = result;
+        this.uniqueId = result[0].postId;
         this.participants = result[0].attendies;
-        console.log(result[0].attendies);
-        console.log(this.participants);
+
+        console.log(result[1].city);
+        // this.counting = result[0].counter;
+        // console.log(this.uniqueId);
+        // console.log(result[0].attendies);
+        // console.log(this.participants);
+        // console.log(this.counting);
       });
   }
 };

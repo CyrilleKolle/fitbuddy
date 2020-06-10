@@ -5,26 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    attends :{
+      
+    },
 
     events:
-      [{ id: 1, name: 'Football', description: 'Looking for a football buddy around heden', time: '12:00', date: 'Mon 23' },
-
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }, { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }
-        , { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0, counter: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 },
-      { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }],
-
+    {
     counter: 0,
     password: null,
     username: null,
@@ -42,14 +28,17 @@ export default new Vuex.Store({
     checkboxGroup: [],
     datetime: new Date(),
     participants: null,
-
+    }
 
   },
 
   mutations: {
 
     joinMutation(state, counter) {
-      state.counter += counter
+      state.events.counter += counter
+    },
+    countMutation(state, counter) {
+      state.events.counter += counter
     },
     setUserName(state, payload) {
       state.username = payload
