@@ -14,15 +14,15 @@
       </div>
       <div class="inputdiv">
         <b-field label="Email"></b-field>
-        <input type="email" placeholder="Skriv in din email" value />
+        <input type="email" placeholder="Skriv in din email" v-model="email" />
       </div>
       <div class="inputdiv">
         <b-field label="Telefonnummer"></b-field>
-        <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required />
+        <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required v-model="phone" />
       </div>
       <div class="inputdiv">
         <b-field label="Ålder">
-          <input type="number" placeholder="Skriv in din ålder" min="16" />
+          <input type="number" placeholder="Skriv in din ålder" min="16" v-model="birthyear" />
         </b-field>
       </div>
       <div class="genderdiv">
@@ -39,16 +39,16 @@
       <div class="citydiv">
         <section>
           <b-field label="Stad">
-            <b-select placeholder="Välj vilken stad">
-              <option value="gbg">Göteborg</option>
-              <option value="sthlm">Stockholm</option>
-              <option value="malmo">Malmö</option>
+            <b-select placeholder="Välj vilken stad" v-model="city">
+              <option value="Göteborg">Göteborg</option>
+              <option value="Stockholm">Stockholm</option>
+              <option value="Malmö">Malmö</option>
             </b-select>
           </b-field>
         </section>
       </div>
       <br />
-      <b-button class="is-twitter">Spara</b-button>
+      <b-button class="is-twitter" @click="onSubmit()">Spara</b-button>
       <br />
       <br />
     </div>
@@ -57,10 +57,117 @@
 
 <script>
 export default {
-  data() {
-    return {
-      gender: ""
-    };
+  created() {
+    console.log(this.$store.state.username);
+  },
+  computed: {
+    username: {
+      get() {
+        return this.$store.state.username;
+      },
+      set(username) {
+        this.$store.commit("setUserName", username);
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.password;
+      },
+      set(password) {
+        this.$store.commit("setPassword", password);
+      }
+    },
+    firstname: {
+      get() {
+        return this.$store.state.firstname;
+      },
+      set(firstname) {
+        this.$store.commit("setFirstname", firstname);
+      }
+    },
+    lastname: {
+      get() {
+        return this.$store.state.lastname;
+      },
+      set(lastname) {
+        this.$store.commit("setLastname", lastname);
+      }
+    },
+    email: {
+      get() {
+        return this.$store.state.email;
+      },
+      set(email) {
+        this.$store.commit("setEmail", email);
+      }
+    },
+    phone: {
+      get() {
+        return this.$store.state.phone;
+      },
+      set(phone) {
+        this.$store.commit("setPhone", phone);
+      }
+    },
+    birthyear: {
+      get() {
+        return this.$store.state.birthyear;
+      },
+      set(birthyear) {
+        this.$store.commit("setBirthyear", birthyear);
+      }
+    },
+    gender: {
+      get() {
+        return this.$store.state.gender;
+      },
+      set(gender) {
+        this.$store.commit("setGender", gender);
+      }
+    },
+    city: {
+      get() {
+        return this.$store.state.userCity;
+      },
+      set(city) {
+        this.$store.commit("setUserCity", city);
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      fetch("/api/profile", {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          phone: this.phone,
+          birthyear: this.birthyear,
+          gender: this.gender,
+          city: this.city
+        })
+      }).then(result => {
+        console.log(
+          this.username,
+          this.password,
+          this.firstname,
+          this.lastname,
+          this.username,
+          this.email,
+          this.phone,
+          this.birthyear,
+          this.gender,
+          this.city
+        );
+        console.log(result);
+      });
+    }
   }
 };
 </script>
