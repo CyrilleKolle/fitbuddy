@@ -19,6 +19,24 @@ app.use((request, response, next) => {
 })
 
 
+app.post('/signUp', (request, response) => {
+    database.all('SELECT * FROM users where username=?', [request.body.username])
+    .then((rows) => {
+        if (rows.length === 0) {
+            database.run('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [request.body.username, request.body.password, request.body.firstname, request.body.lastname, null, null, request.body.birthyear, null, null]).then(() => {
+            response.status(201).send('LYCKAT!')
+                 
+        })
+        } else {
+            response.status(401).send("Användare finns redan")
+        }
+    })
+})
+
+    
+
+
 app.post('/login', (request, response) => {
     database.all('SELECT * FROM users WHERE username=? AND password=?', [request.body.username, request.body.password]).then(rows => {
         if (rows.length === 1) {
