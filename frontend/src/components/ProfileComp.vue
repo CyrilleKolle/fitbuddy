@@ -2,7 +2,8 @@
   <div class="fixedBox">
     <div class="profile">
       <div class="img">
-        <h1>Profil</h1>
+        <h1>{{ this.firstname }} {{ this.lastname }}</h1>
+        <h5>{{ this.age }} år</h5>
         <br />
         <img
           alt="Ladda upp bild på dig själv"
@@ -10,20 +11,24 @@
           style="border-radius: 50%; width: 300px; height:300px;"
         />
         <br />
-        <b-button class="is-twitter">Välj en bild</b-button>
+        <!-- <b-button class="is-twitter">Välj en bild</b-button> -->
+        <b-field class="file">
+          <b-upload v-model="file">
+            <a class="button is-twitter upload">
+              <b-icon icon="upload"></b-icon>
+              <span>Välj en bild</span>
+            </a>
+          </b-upload>
+          <span class="file-name" v-if="file">{{ file.name }}</span>
+        </b-field>
       </div>
       <div class="inputdiv">
         <b-field label="Email"></b-field>
-        <input type="email" placeholder="Skriv in din email" value />
+        <input type="email" placeholder="Skriv in din email" v-model="email" />
       </div>
       <div class="inputdiv">
         <b-field label="Telefonnummer"></b-field>
-        <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required />
-      </div>
-      <div class="inputdiv">
-        <b-field label="Ålder">
-          <input type="number" placeholder="Skriv in din ålder" min="16" />
-        </b-field>
+        <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required v-model="phone" />
       </div>
       <div class="genderdiv">
         <section>
@@ -39,16 +44,16 @@
       <div class="citydiv">
         <section>
           <b-field label="Stad">
-            <b-select placeholder="Välj vilken stad">
-              <option value="gbg">Göteborg</option>
-              <option value="sthlm">Stockholm</option>
-              <option value="malmo">Malmö</option>
+            <b-select placeholder="Välj vilken stad" v-model="city">
+              <option value="Göteborg">Göteborg</option>
+              <option value="Stockholm">Stockholm</option>
+              <option value="Malmö">Malmö</option>
             </b-select>
           </b-field>
         </section>
       </div>
       <br />
-      <b-button class="is-twitter">Spara</b-button>
+      <b-button class="is-twitter" @click="onSubmit()">Spara</b-button>
       <br />
       <br />
     </div>
@@ -57,9 +62,125 @@
 
 <script>
 export default {
+  created() {
+    fetch(`/api/loadProfile/${this.loggedInAsUser}`)
+      .then(response => response.json())
+      .then(result => {
+        this.username = result[0].username;
+        this.firstname = result[0].firstname;
+        this.lastname = result[0].lastname;
+        this.email = result[0].email;
+        this.phone = result[0].phone;
+        this.birthyear = result[0].birthyear;
+        this.gender = result[0].gender;
+        this.city = result[0].city;
+        this.calculateAge();
+      });
+  },
+  computed: {
+    loggedInAsUser() {
+      return this.$store.state.loggedInAsUser;
+    },
+    username: {
+      get() {
+        return this.$store.state.username;
+      },
+      set(username) {
+        this.$store.commit("setUserName", username);
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.password;
+      },
+      set(password) {
+        this.$store.commit("setPassword", password);
+      }
+    },
+    firstname: {
+      get() {
+        return this.$store.state.firstname;
+      },
+      set(firstname) {
+        this.$store.commit("setFirstname", firstname);
+      }
+    },
+    lastname: {
+      get() {
+        return this.$store.state.lastname;
+      },
+      set(lastname) {
+        this.$store.commit("setLastname", lastname);
+      }
+    },
+    email: {
+      get() {
+        return this.$store.state.email;
+      },
+      set(email) {
+        this.$store.commit("setEmail", email);
+      }
+    },
+    phone: {
+      get() {
+        return this.$store.state.phone;
+      },
+      set(phone) {
+        this.$store.commit("setPhone", phone);
+      }
+    },
+    birthyear: {
+      get() {
+        return this.$store.state.birthyear;
+      },
+      set(birthyear) {
+        this.$store.commit("setBirthyear", birthyear);
+      }
+    },
+    gender: {
+      get() {
+        return this.$store.state.gender;
+      },
+      set(gender) {
+        this.$store.commit("setGender", gender);
+      }
+    },
+    city: {
+      get() {
+        return this.$store.state.userCity;
+      },
+      set(city) {
+        this.$store.commit("setUserCity", city);
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      fetch("/api/updateProfile", {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: this.email,
+          phone: this.phone,
+          gender: this.gender,
+          city: this.city,
+          username: this.username
+        })
+      });
+    },
+    calculateAge() {
+      var d = new Date();
+      var n = d.getFullYear();
+      var userAge = n - this.birthyear;
+      this.age = userAge;
+    }
+  },
   data() {
     return {
-      gender: ""
+      age: null,
+      file: null
     };
   }
 };
@@ -96,6 +217,9 @@ h1 {
 }
 .img {
   padding: 30px;
+}
+.upload {
+  margin: auto;
 }
 
 .inputdiv {

@@ -204,7 +204,7 @@ export default {
     },
     deletePost(postId) {
       // for (let i = 0; i < this.allPosts.length; i++) {
-      //    this.allPosts.splice(this.allPosts.indexOf(e), 1)
+      //    this.allPosts.splice(this.allPosts.indexOf(postId), 1)
 
       // }
 
@@ -253,17 +253,20 @@ export default {
           this.cityFiltered.push(this.allPosts[i]);
         }
       }
+
       console.log(this.cityFiltered);
       this.allPosts = this.cityFiltered;
       return this.cityFiltered;
     },
     filterAll() {
+      window.location.reload();
       this.cityFiltered = this.allPosts;
       console.log(this.cityFiltered);
       this.allPosts = this.cityFiltered;
       return this.cityFiltered;
     },
     football() {
+      window.location.reload();
       for (let i = 0; i < this.allPosts.length; i++) {
         if (this.allPosts[i].activity === this.foot) {
           this.activityFiltered.push(this.allPosts[i]);

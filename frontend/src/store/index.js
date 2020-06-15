@@ -12,10 +12,7 @@ export default new Vuex.Store({
     events:
     {
     counter: 0,
-    password: null,
-    username: null,
-    firstname: null,
-    lastname: null,
+
     title: null,
     description: null,
     city: null,
@@ -28,6 +25,7 @@ export default new Vuex.Store({
     checkboxGroup: [],
     datetime: new Date(),
     participants: null,
+<<<<<<< HEAD
     }
 
   },
@@ -40,6 +38,24 @@ export default new Vuex.Store({
     countMutation(state, counter) {
       state.events.counter += counter
     },
+=======
+
+    //profil
+    loggedInAsUser: null,
+    username: null,
+    password: null,
+    firstname: null,
+    lastname: null,
+    email: null,
+    phone: null,
+    birthyear: null,
+    gender: null,
+    userCity: null,
+  },
+
+  mutations: {
+    // Profile, Inlog & Register
+>>>>>>> 5d229bea39f3b41b13618aaba4ec6c55ba14e317
     setUserName(state, payload) {
       state.username = payload
     },
@@ -51,6 +67,30 @@ export default new Vuex.Store({
     },
     setLastname(state, payload) {
       state.lastname = payload
+    },
+    setEmail(state, payload) {
+      state.email = payload
+    },
+    setPhone(state, payload) {
+      state.phone = payload
+    },
+    setBirthyear(state, payload) {
+      state.birthyear = payload
+    },
+    setGender(state, payload) {
+      state.gender = payload
+    },
+    setUserCity(state, payload) {
+      state.userCity = payload
+    },
+    setLoggedInAsUser(state, payload) {
+      state.loggedInAsUser = payload
+    },
+
+    // Other
+
+    joinMutation(state, counter) {
+      state.counter += counter
     },
     setTimestamp(state, timestamp) {
       state.timestamp = timestamp
@@ -84,6 +124,9 @@ export default new Vuex.Store({
     },
     setDescription(state, payload) {
       state.description = payload
+    },
+    setBirthyear(state, payload) {
+      state.birthyear = payload
     }
   },
 
