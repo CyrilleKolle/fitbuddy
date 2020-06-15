@@ -2,7 +2,8 @@
   <div class="fixedBox">
     <div class="profile">
       <div class="img">
-        <h1>Profil</h1>
+        <h1>{{ this.firstname }} {{ this.lastname }}</h1>
+        <h5>{{ this.age }} år</h5>
         <br />
         <img
           alt="Ladda upp bild på dig själv"
@@ -10,7 +11,16 @@
           style="border-radius: 50%; width: 300px; height:300px;"
         />
         <br />
-        <b-button class="is-twitter">Välj en bild</b-button>
+        <!-- <b-button class="is-twitter">Välj en bild</b-button> -->
+        <b-field class="file">
+          <b-upload v-model="file">
+            <a class="button is-twitter upload">
+              <b-icon icon="upload"></b-icon>
+              <span>Välj en bild</span>
+            </a>
+          </b-upload>
+          <span class="file-name" v-if="file">{{ file.name }}</span>
+        </b-field>
       </div>
       <div class="inputdiv">
         <b-field label="Email"></b-field>
@@ -19,11 +29,6 @@
       <div class="inputdiv">
         <b-field label="Telefonnummer"></b-field>
         <input type="tel" placeholder="0701234567" pattern="[0-9]{10}" required v-model="phone" />
-      </div>
-      <div class="inputdiv">
-        <b-field label="Ålder">
-          <input type="number" placeholder="Skriv in din ålder" min="16" v-model="birthyear" />
-        </b-field>
       </div>
       <div class="genderdiv">
         <section>
@@ -58,9 +63,24 @@
 <script>
 export default {
   created() {
-    console.log(this.$store.state.username);
+    fetch(`/api/loadProfile/${this.loggedInAsUser}`)
+      .then(response => response.json())
+      .then(result => {
+        this.username = result[0].username;
+        this.firstname = result[0].firstname;
+        this.lastname = result[0].lastname;
+        this.email = result[0].email;
+        this.phone = result[0].phone;
+        this.birthyear = result[0].birthyear;
+        this.gender = result[0].gender;
+        this.city = result[0].city;
+        this.calculateAge();
+      });
   },
   computed: {
+    loggedInAsUser() {
+      return this.$store.state.loggedInAsUser;
+    },
     username: {
       get() {
         return this.$store.state.username;
@@ -136,38 +156,32 @@ export default {
   },
   methods: {
     onSubmit() {
-      fetch("/api/profile", {
+      fetch("/api/updateProfile", {
         method: "put",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-          firstname: this.firstname,
-          lastname: this.lastname,
           email: this.email,
           phone: this.phone,
-          birthyear: this.birthyear,
           gender: this.gender,
-          city: this.city
+          city: this.city,
+          username: this.username
         })
-      }).then(result => {
-        console.log(
-          this.username,
-          this.password,
-          this.firstname,
-          this.lastname,
-          this.username,
-          this.email,
-          this.phone,
-          this.birthyear,
-          this.gender,
-          this.city
-        );
-        console.log(result);
       });
+    },
+    calculateAge() {
+      var d = new Date();
+      var n = d.getFullYear();
+      var userAge = n - this.birthyear;
+      this.age = userAge;
     }
+  },
+  data() {
+    return {
+      age: null,
+      file: null
+    };
   }
 };
 </script>
@@ -203,6 +217,9 @@ h1 {
 }
 .img {
   padding: 30px;
+}
+.upload {
+  margin: auto;
 }
 
 .inputdiv {

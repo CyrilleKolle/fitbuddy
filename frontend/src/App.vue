@@ -12,12 +12,16 @@
       <template slot="start">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">Hem</b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ path: '/post' }">Inlägg</b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ path: '/profile' }">Profil</b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          :to="{ path: '/profile' }"
+          v-if="this.loggedInAsUser !== null"
+        >Profil</b-navbar-item>
       </template>
 
       <template slot="end">
         <b-navbar-item tag="div">
-          <div class="buttons" v-if="true">
+          <div class="buttons" v-if="this.loggedInAsUser === null">
             <b-navbar-item
               tag="router-link"
               :to="{ path: '/signUp' }"
@@ -29,12 +33,61 @@
               class="button is-light"
             >Logga in</b-navbar-item>
           </div>
+          <div class="buttons" v-if="this.loggedInAsUser !== null">
+            <b-navbar-item @click="logOut()" class="button is-twitter specialbtn">Logga ut</b-navbar-item>
+          </div>
         </b-navbar-item>
       </template>
     </b-navbar>
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  created() {
+    // http://localhost:3000/
+    fetch("/api")
+      .then(response => response.json())
+      .then(result => {
+        this.loggedInAsUser = result.username;
+      });
+  },
+  computed: {
+    loggedInAsUser: {
+      get() {
+        return this.$store.state.loggedInAsUser;
+      },
+      set(loggedInAsUser) {
+        this.$store.commit("setLoggedInAsUser", loggedInAsUser);
+      }
+    }
+  },
+  methods: {
+    logOut() {
+      fetch("/api/logOut", {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          this.reloadPage();
+        } else {
+          console.log("gick inte att logga ut");
+        }
+      });
+    },
+    reloadPage() {
+      this.$router.push({ name: "Home" });
+      window.location.reload();
+    }
+  }
+};
+</script>
+
 
 <style lang="scss">
 // Import Bulma's core

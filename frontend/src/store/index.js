@@ -40,6 +40,7 @@ export default new Vuex.Store({
     participants: null,
 
     //profil
+    loggedInAsUser: null,
     username: null,
     password: null,
     firstname: null,
@@ -52,7 +53,7 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    // Profil, Inlog & Register
+    // Profile, Inlog & Register
     setUserName(state, payload) {
       state.username = payload
     },
@@ -79,6 +80,9 @@ export default new Vuex.Store({
     },
     setUserCity(state, payload) {
       state.userCity = payload
+    },
+    setLoggedInAsUser(state, payload) {
+      state.loggedInAsUser = payload
     },
 
     // Other
