@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="fixedBox">
     <div class="home">
       <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
@@ -87,22 +87,49 @@
           class="contact-form-container"
           :fixed-top="true"
         >
-          <div>{{post.title}}</div>
-          <div>{{post.description}}</div>
-          <div>{{post.city}}</div>
-          <div>{{post.timestamp}}</div>
-          <div>{{post.duration}} Hours</div>
-          <div>{{post.activity}}</div>
-          <div>{{post.other}}</div>
+          <!-- <div>this.time</div> -->
 
-          <div>{{post.postId}}</div>
+          <div id="title-post">{{post.title}}</div>
+          <div class="right-post">{{post.city}}</div>
+          <hr />
+          <div id="des-post">{{post.description}}</div>
 
-          <button
-            @click="increaseAttend(post.postId)"
-            id="attend-button"
-            :disabled=" localCounter === post.attendies"
-          >attend</button>
+          <div class="right-post">posted: {{post.timestamp}}</div>
+          <div class="right-post">duration: {{post.duration}} h</div>
+          <div id="activity-post">{{post.activity}}</div>
+          <div id="other-post">{{post.other}}</div>
+          <hr />
+          <!-- <div>{{post.postId}}</div> -->
+          <!-- <div class="box-1">
+            <div class="btn btn-one">
+              <button
+                @click="increaseAttend(post.postId)"
+                :disabled=" localCounter === post.attendies"
+              >attend</button>
+            </div>
+          </div>-->
+
+          <p href="#" class="btn-flip" data-back="attend" data-front="Interested?">
+            <button
+              @click="increaseAttend(post.postId)"
+              :disabled=" localCounter === post.attendies"
+            >
+              here
+              <i class="fas fa-check 5x"></i>
+            </button>
+          </p>
+
+          <hr />
           <span style="border: 1px solid black">{{post.counter}}/{{post.attendies}}</span>
+
+          <div class="box-3" v-if="hideDelete">
+            <div class="btn btn-three">
+              <button @click="deletePost(postId)">
+                cancel
+                <i class="far f a-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <hr />
         <paginate
@@ -126,6 +153,17 @@
 </template>
 
 <script>
+// this.webSocket = new WebSocket('ws://localhost:3002')
+
+// this.webSocket.addEventListener('message', (event) => {
+
+//   this.time = JSON.parse(event.data).time
+// })
+
+// this.webSocket.addEventListener('open', () => {
+//   this.webSocket.send('Hi, there!')
+// })
+
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
@@ -146,6 +184,8 @@ export default {
         .then(result => {
           this.localCounter = result[0].counter;
           this.localCounter++;
+          this.here = "yes";
+          this.hideDelete = true;
           fetch("/api/attends", {
             method: "put",
             headers: {
@@ -158,17 +198,32 @@ export default {
           });
         });
     },
-    // filterC(filterCity){
-    //   fetch(`/api/posts/${}`)
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     this.city = result[0].city
-    //      console.log("this is actual city " + this.city)
-    //   });
-    // },
 
     clickCallback(pageNum) {
       console.log(pageNum);
+    },
+    deletePost(postId) {
+      // for (let i = 0; i < this.allPosts.length; i++) {
+      //    this.allPosts.splice(this.allPosts.indexOf(e), 1)
+
+      // }
+
+      fetch("/api/attends", {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          counter: this.localCounter,
+          postId: postId
+        })
+      });
+
+      // fetch(`/api/remove/${postId}`)
+      // .then(response => response.json())
+      // .then(result => {
+      //   console.log(result)
+      // })
     },
     filterGbg() {
       for (let i = 0; i < this.allPosts.length; i++) {
@@ -228,7 +283,7 @@ export default {
       this.allPosts = this.activityFiltered;
       return this.activityFiltered;
     },
-        pool() {
+    pool() {
       for (let i = 0; i < this.allPosts.length; i++) {
         if (this.allPosts[i].activity === this.pooll) {
           this.activityFiltered.push(this.allPosts[i]);
@@ -238,7 +293,7 @@ export default {
       this.allPosts = this.activityFiltered;
       return this.activityFiltered;
     },
-    basketball(){
+    basketball() {
       for (let i = 0; i < this.allPosts.length; i++) {
         if (this.allPosts[i].activity === this.basket) {
           this.activityFiltered.push(this.allPosts[i]);
@@ -248,7 +303,6 @@ export default {
       this.allPosts = this.activityFiltered;
       return this.activityFiltered;
     }
-
   },
   mutations: {
     counta: {
@@ -287,7 +341,11 @@ export default {
       pooll: "pool",
       basket: "Basketball",
       cityFiltered: [],
-      activityFiltered: []
+      activityFiltered: [],
+      time: null,
+      webSocket: null,
+      hideDelete: false,
+      here: "here"
     };
   },
   created() {
@@ -298,7 +356,7 @@ export default {
         this.uniqueId = result[0].postId;
         this.participants = result[0].attendies;
 
-        console.log(result[1].city);
+        console.log(result[0].city);
         // this.counting = result[0].counter;
         // console.log(this.uniqueId);
         // console.log(result[0].attendies);
@@ -308,7 +366,122 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+$speed: 1s;
+
+.btn-flip {
+  opacity: 1;
+  outline: 0;
+  color: #fff;
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans";
+  text-transform: uppercase;
+
+  &:hover {
+    &:after {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    &:before {
+      opacity: 0;
+      transform: translateY(50%) rotateX(90deg);
+    }
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    color: #323237;
+    display: block;
+    transition: $speed;
+    position: absolute;
+    background: #adadaf;
+    content: attr(data-back);
+    transform: translateY(-50%) rotateX(90deg);
+  }
+
+  &:before {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    color: #adadaf;
+    display: block;
+    padding: 0 30px;
+    line-height: 40px;
+    transition: $speed;
+    position: relative;
+    background: #323237;
+    content: attr(data-front);
+    transform: translateY(0) rotateX(0);
+  }
+}
+</style>
 <style>
+#title-post {
+  position: absolute;
+}
+.right-post {
+  margin: 0;
+  display: flex;
+  position: relative;
+  justify-content: right;
+  align-items: right;
+}
+
+div[class*="box"] {
+  height: 33.33%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-three {
+  color: #fff;
+  transition: all 0.5s;
+  position: relative;
+}
+.btn-three::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(136, 12, 12, 0.5);
+  transition: all 0.3s;
+}
+.btn-three:hover::before {
+  opacity: 0;
+  transform: scale(0.5, 0.5);
+}
+.btn-three::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border: 1px solid rgba(136, 12, 12, 0.5);
+  transform: scale(1.2, 1.2);
+}
+.btn-three:hover::after {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
 .p-1 {
   padding: 1em;
 }
@@ -316,16 +489,17 @@ export default {
   columns: auto;
 }
 #attend-button {
-  background-color: rgb(166, 240, 166);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-width: 0 5px 0 5px;
 }
 .contact-form-container {
+  background-color: rgb(226, 225, 225);
   box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   width: 85%;
   max-width: 1000px;
   padding: 30px 40px;
   margin: 100px auto auto auto;
   box-sizing: border-box;
-
   color: black;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   border-radius: 10px;
@@ -359,6 +533,15 @@ export default {
 #pagination {
   margin-left: 10%;
   margin-right: 10%;
+}
+#feedId {
+  border-top: 1px solid #eee;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-bottom: 30px;
+  padding-top: 40px;
+  text-align: center;
 }
 </style>
 

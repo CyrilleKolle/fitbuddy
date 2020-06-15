@@ -4,7 +4,16 @@ const sqlite3 = require('sqlite3')
 const app = express()
 const path = require('path')
 const cors = require('cors')
+const moment = require('moment'),
+    ws = require('ws')
 
+const webSocketServer = new ws.Server({ port: 3002 })
+
+const webSockets = []
+
+function getTimeObject() {
+    return { time: moment().format('HH:mm:ss') }
+}
 
 
 let database
@@ -52,29 +61,18 @@ app.put('/attends', (request, response) => {
     })
 })
 
+app.delete('/remove', (request, response) =>{
+    database.all('DELETE FROM posts WHERE postId=?', [request.body.postId])
+    .then(remove => {
+        response.send(remove)
+    })
+})
+
 app.get('/posts', (request, response) => {
     database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
         response.send(filterCities)
     })
 })
-
-
-
-// sqlite
-//     .open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
-
-//     .then(database => {
-//         database
-//             .run('UPDATE posts SET counter=? WHERE postId=?', [
-//                 0,
-//                 1
-//             ])
-//             .then(() => {
-
-//             })
-//     })
-
-
 
 
 sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
@@ -85,3 +83,25 @@ sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
 app.listen(3000, () => {
     console.log('Server running on port 3000')
 })
+// webSocketServer.on('connection', (webSocket) => {
+//     console.log('Client connected')
+
+//     webSocket.send(JSON.stringify(getTimeObject()))
+
+//     webSocket.on('message', (data) => {
+//         console.log(data)
+//     })
+
+//     webSocket.on('close', () => {
+//         console.log('Client disconnected')
+//         webSockets.splice(webSockets.indexOf(webSocket), 1)
+//     })
+
+//     webSockets.push(webSocket)
+// })
+
+// setInterval(() => {
+//     webSockets.forEach((webSocket) => {
+//         webSocket.send(JSON.stringify(getTimeObject()))
+//     })
+// }, 1000)

@@ -16,8 +16,6 @@
     "bulma": "^0.8.2",
     "core-js": "^3.6.4",
     "elevator.js": "^1.0.1",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuejs-paginate": "^2.1.0",
@@ -32,6 +30,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
     "vue-elevator": "^1.1.4",
     "vue-template-compiler": "^2.6.11"
   }
