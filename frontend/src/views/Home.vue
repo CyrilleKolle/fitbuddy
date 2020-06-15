@@ -39,7 +39,7 @@
                   <b-menu-item icon="account" label="Malmo" @click="filterMal()"></b-menu-item>
                 </b-menu-item>
                 <b-menu-item icon="account" label="Activities">
-                  <b-menu-item label="Football" @click="football()"></b-menu-item>
+                  <b-menu-item label="Fotball" @click="football()"></b-menu-item>
                   <b-menu-item label="Handball" @click="handball()"></b-menu-item>
                   <b-menu-item label="basketball" @click="basketball()"></b-menu-item>
                   <b-menu-item label="Pool" @click="pool()"></b-menu-item>
@@ -56,9 +56,7 @@
                   style="visibility: hidden"
                 ></b-menu-item>
               </b-menu-list>
-              <b-menu-list label="Actions">
-                <b-menu-item label="Logout"></b-menu-item>
-              </b-menu-list>
+            
             </b-menu>
           </div>
         </b-sidebar>
