@@ -19,25 +19,6 @@ const upload = multer({ dest: 'uploads/' })
 //     return { time: moment().format('HH:mm:ss') }
 // }
 
-
-// const moment = require('moment'),
-//     ws = require('ws')
-
-// const webSocketServer = new ws.Server({ port: 3002 })
-
-// const webSockets = []
-
-// function getTimeObject() {
-//     return { time: moment().format('HH:mm:ss') }
-// }
-
-
-
-
-
-
-
-
 let database
 app.use(express.static(path.join(path.resolve(), 'public')))
 app.use(express.json())
@@ -52,6 +33,11 @@ app.use((request, response, next) => {
 
 app.delete('/logOut', (request, response) => {
     database.run('DELETE FROM tokens WHERE 1').then(() => {
+        response.status(200).send()
+    })
+})
+app.delete('/deletePost/:postId', (request, response) => {
+    database.run('DELETE FROM posts WHERE postId=?', [request.params.postId]).then(() => {
         response.status(200).send()
     })
 })
@@ -121,6 +107,15 @@ app.get('/posts', (request, response) => {
     })
 })
 
+// Skapa en ny rad med diverse information som behövs vid skapande av ett event
+app.post('/createpost', (req, response) => {
+    database.run(`INSERT INTO posts VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [req.body.postId, req.body.title, req.body.description, req.body.city, req.body.timestamp, req.body.duration, req.body.activity, JSON.stringify(req.body.attendees), req.body.limit, req.body.counter, req.body.creator])
+        .then(() => {
+            response.status(200).send()
+            console.log(req.body);
+        })
+})
+
 
 app.get('/posts/:postId', (request, response) => {
     database.all('SELECT * FROM posts WHERE postId=?', [request.params.postId]).then(posts => {
@@ -129,26 +124,26 @@ app.get('/posts/:postId', (request, response) => {
 })
 
 app.put('/attends', (request, response) => {
-    database.all('UPDATE posts SET counter=? WHERE postId=?', [request.body.counter, request.body.postId
-    ]).then(attends => {
-        response.send(attends)
+    database.run('UPDATE posts SET counter=?,attendees=? WHERE postId=?', [request.body.counter, request.body.attendees, request.body.postId
+    ]).then(() => {
+        response.status(200).send()
     })
 })
 
 
-app.delete('/remove', (request, response) =>{
+app.delete('/remove', (request, response) => {
     database.all('DELETE FROM posts WHERE postId=?', [request.body.postId])
-    .then(remove => {
-        response.send(remove)
-    })
+        .then(remove => {
+            response.send(remove)
+        })
 
 })
 
-app.get('/posts', (request, response) => {
-    database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
-        response.send(filterCities)
-    })
-})
+// app.get('/posts', (request, response) => {
+//     database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
+//         response.send(filterCities)
+//     })
+// })
 
 app.get('/loadProfile/:username', (request, response) => {
     database.all('SELECT * FROM users WHERE username=?', [request.params.username]).then(result => {

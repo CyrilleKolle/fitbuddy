@@ -56,7 +56,6 @@
                   style="visibility: hidden"
                 ></b-menu-item>
               </b-menu-list>
-            
             </b-menu>
           </div>
         </b-sidebar>
@@ -95,38 +94,16 @@
           <div class="right-post">posted: {{post.timestamp}}</div>
           <div class="right-post">duration: {{post.duration}} h</div>
           <div id="activity-post">{{post.activity}}</div>
-          <div id="other-post">{{post.other}}</div>
+          <!-- <div v-for="(name, i) in JSON.parse(post.attendees)" :key="`${i}-${name}`"></div> -->
+          <button @click="increaseAttend(post)" :disabled=" post.counter === post.limit">here</button>
           <hr />
-          <!-- <div>{{post.postId}}</div> -->
-          <!-- <div class="box-1">
-            <div class="btn btn-one">
-              <button
-                @click="increaseAttend(post.postId)"
-                :disabled=" localCounter === post.attendies"
-              >attend</button>
-            </div>
-          </div>-->
+          <span style="border: 1px solid black">{{post.counter}}/{{post.limit}}</span>
+          <div>{{post.postId}}</div>
+          <div class="box-3" v-if="post.creator === loggedInAsUser">
+            <!-- <div class="btn btn-three"> -->
 
-          <p href="#" class="btn-flip" data-back="attend" data-front="Interested?">
-            <button
-              @click="increaseAttend(post.postId)"
-              :disabled=" localCounter === post.attendies"
-            >
-              here
-              <i class="fas fa-check 5x"></i>
-            </button>
-          </p>
-
-          <hr />
-          <span style="border: 1px solid black">{{post.counter}}/{{post.attendies}}</span>
-
-          <div class="box-3" v-if="hideDelete">
-            <div class="btn btn-three">
-              <button @click="deletePost(postId)">
-                cancel
-                <i class="far f a-trash-alt"></i>
-              </button>
-            </div>
+            <button @click="deletePost(post)">cancel</button>
+            <!-- </div> -->
           </div>
         </div>
         <hr />
@@ -170,59 +147,70 @@ export default {
     HelloWorld
   },
   computed: {
+    filteredEvents(city) {
+      return this.$store.state.events.filter(event => event.city === city);
+    },
     events() {
       console.log("join pressed");
       return this.$store.state.events.counter;
+    },
+    loggedInAsUser: {
+      get() {
+        return this.$store.state.loggedInAsUser;
+      },
+      set(loggedInAsUser) {
+        this.$store.commit("setLoggedInAsUser", loggedInAsUser);
+      }
     }
   },
   methods: {
-    increaseAttend(postId) {
-      fetch(`/api/posts/${postId}`)
-        .then(response => response.json())
-        .then(result => {
-          this.localCounter = result[0].counter;
-          this.localCounter++;
-          this.here = "yes";
-          this.hideDelete = true;
-          fetch("/api/attends", {
-            method: "put",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              counter: this.localCounter,
-              postId: postId
-            })
-          });
-        });
+    deletePost(post) {
+      console.log(post.postId);
+      fetch(`/api/deletePost/${post.postId}`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          window.location.reload();
+        } else {
+          console.log("gick inte att radera inlägg");
+        }
+      });
+    },
+    increaseAttend(post) {
+      let att = JSON.parse(post.attendees);
+      att.push({ name: this.loggedInAsUser });
+      let att2 = JSON.stringify(att);
+
+      this.localCounter = post.counter;
+      this.localCounter++;
+
+      fetch(`/api/attends`, {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          postId: post.postId,
+          attendees: att2,
+          counter: this.localCounter
+        })
+      }).then(result => {
+        if (result.status === 200) {
+          console.log("Uppdatering lyckades");
+        } else {
+          console.log("Något gick fel");
+        }
+      });
     },
 
     clickCallback(pageNum) {
       console.log(pageNum);
     },
-    deletePost(postId) {
-      // for (let i = 0; i < this.allPosts.length; i++) {
-      //    this.allPosts.splice(this.allPosts.indexOf(postId), 1)
 
-      // }
-
-      fetch("/api/attends", {
-        method: "delete",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          counter: this.localCounter,
-          postId: postId
-        })
-      });
-
-      // fetch(`/api/remove/${postId}`)
-      // .then(response => response.json())
-      // .then(result => {
-      //   console.log(result)
-      // })
-    },
     filterGbg() {
       for (let i = 0; i < this.allPosts.length; i++) {
         if (this.allPosts[i].city === this.gothenburg) {
@@ -330,7 +318,7 @@ export default {
       allPosts: null,
       postId: null,
       localCounter: null,
-      participants: 0,
+      // participants: JSON.parse(post.attendees),
       counta: 0,
       uniqueId: null,
       city: null,
@@ -354,15 +342,6 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.allPosts = result;
-        this.uniqueId = result[0].postId;
-        this.participants = result[0].attendies;
-
-        console.log(result[0].city);
-        // this.counting = result[0].counter;
-        // console.log(this.uniqueId);
-        // console.log(result[0].attendies);
-        // console.log(this.participants);
-        // console.log(this.counting);
       });
   }
 };
