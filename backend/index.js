@@ -8,6 +8,17 @@ const { uuid } = require('uuidv4')
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
+// const moment = require('moment'),
+//     ws = require('ws')
+
+// const webSocketServer = new ws.Server({ port: 3002 })
+
+// const webSockets = []
+
+// function getTimeObject() {
+//     return { time: moment().format('HH:mm:ss') }
+// }
+
 
 let database
 app.use(express.static(path.join(path.resolve(), 'public')))
@@ -45,20 +56,20 @@ app.get('/', (request, response) => {
 
 app.post('/signUp', (request, response) => {
     database.all('SELECT * FROM users where username=?', [request.body.username])
-    .then((rows) => {
-        if (rows.length === 0) {
-            database.run('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [request.body.username, request.body.password, request.body.firstname, request.body.lastname, null, null, request.body.birthyear, null, null]).then(() => {
-            response.status(201).send('LYCKAT!')
-                 
+        .then((rows) => {
+            if (rows.length === 0) {
+                database.run('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [request.body.username, request.body.password, request.body.firstname, request.body.lastname, null, null, request.body.birthyear, null, null]).then(() => {
+                        response.status(201).send('LYCKAT!')
+
+                    })
+            } else {
+                response.status(401).send("Användare finns redan")
+            }
         })
-        } else {
-            response.status(401).send("Användare finns redan")
-        }
-    })
 })
 
-    
+
 
 
 app.post('/login', (request, response) => {
@@ -89,6 +100,32 @@ app.post('/login', (request, response) => {
 app.get('/posts', (request, response) => {
     database.all('SELECT * FROM posts').then(posts => {
         response.send(posts)
+    })
+})
+
+app.get('/posts/:postId', (request, response) => {
+    database.all('SELECT * FROM posts WHERE postId=?', [request.params.postId]).then(posts => {
+        response.send(posts)
+    })
+})
+
+app.put('/attends', (request, response) => {
+    database.all('UPDATE posts SET counter=? WHERE postId=?', [request.body.counter, request.body.postId
+    ]).then(attends => {
+        response.send(attends)
+    })
+})
+
+app.delete('/remove', (request, response) => {
+    database.all('DELETE FROM posts WHERE postId=?', [request.body.postId])
+        .then(remove => {
+            response.send(remove)
+        })
+})
+
+app.get('/posts', (request, response) => {
+    database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
+        response.send(filterCities)
     })
 })
 

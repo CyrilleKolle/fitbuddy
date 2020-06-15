@@ -73,9 +73,6 @@ export default new Vuex.Store({
     setPhone(state, payload) {
       state.phone = payload
     },
-    setBirthyear(state, payload) {
-      state.birthyear = payload
-    },
     setGender(state, payload) {
       state.gender = payload
     },
@@ -124,7 +121,7 @@ export default new Vuex.Store({
     setDescription(state, payload) {
       state.description = payload
     },
-    setBirthyear(state, payload) {
+    setBirthyear(state, payload) {
       state.birthyear = payload
     }
   },
