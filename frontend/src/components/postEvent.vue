@@ -10,7 +10,11 @@
               <div class="box">
                 <label>
                   Titel för ditt pass:
-                  <input v-model="title" placeholder="Vad vill du göra?" required />
+                  <input
+                    v-model="title"
+                    placeholder="Vad vill du göra?"
+                    required
+                  />
                 </label>
               </div>
 
@@ -20,6 +24,10 @@
                   <strong>Träningstyp:</strong>
                 </label>
                 <div class="block">
+                  <b-radio v-model="checkboxGroup" native-value="Fotboll">Fotboll</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="Tennis">Tennis</b-radio>
+                </div>
+                <!-- <div class="block">
                   <b-checkbox v-model="checkboxGroup" native-value="Football">Fotboll</b-checkbox>
                   <b-checkbox v-model="checkboxGroup" native-value="Tennis">Tennis</b-checkbox>
                   <b-checkbox v-model="checkboxGroup" native-value="cycling">Cykling</b-checkbox>
@@ -28,27 +36,14 @@
                   <b-checkbox v-model="checkboxGroup" native-value="swimming">Simning</b-checkbox>
                   <b-checkbox v-model="checkboxGroup" native-value="climbing">Klättring</b-checkbox>
                   <b-checkbox v-model="checkboxGroup" native-value="Gym">Gym</b-checkbox>
-                </div>
+                </div>-->
               </div>
 
               <!-- Användaren kan m.h.a av en kalender bestämma dag -->
               <div class="box">
                 <label>
                   När vill du träna ?
-                  <b-datetimepicker v-model="datetime" placeholder="Click to select...">
-                    <template slot="left">
-                      <button class="button is-primary" @click="datetime = new Date()">
-                        <b-icon icon="clock"></b-icon>
-                        <span>Nutid</span>
-                      </button>
-                    </template>
-                    <template slot="right">
-                      <button class="button is-danger" @click="datetime = null">
-                        <b-icon icon="close"></b-icon>
-                        <span>Töm</span>
-                      </button>
-                    </template>
-                  </b-datetimepicker>
+                  <b-datetimepicker v-model="datetime" placeholder="Välj dag och tid..."></b-datetimepicker>
                 </label>
               </div>
 
@@ -64,6 +59,26 @@
                     icon-pack="fas"
                   ></b-numberinput>
                 </label>
+              </div>
+
+              <div class="box">
+                <b-select placeholder="Välj stad" v-model="selectedCity">
+                  <option value="Göteborg">Göteborg</option>
+                  <option value="Malmö">Malmö</option>
+                  <option value="Stockholm">Stockholm</option>
+                </b-select>
+              </div>
+
+              <div class="box">
+                <b-select placeholder="Längd på passet" v-model="duration">
+                  <option value="30">30 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60">60 min</option>
+                  <option value="75">75 min</option>
+                  <option value="90">90 min</option>
+                  <option value="120">120 min</option>
+                  <option value="180">180 min</option>
+                </b-select>
               </div>
 
               <!-- Användaren kan här beskriva mer i detalj vad andra behöver veta -->
@@ -91,6 +106,7 @@
 </template>
 
 <script>
+import { uuid } from "vue-uuid";
 export default {
   // datan som representer utgångs punkt av formulärets input-element
   computed: {
@@ -126,6 +142,22 @@ export default {
         this.$store.commit("setParticipants", participants);
       }
     },
+    selectedCity: {
+      get() {
+        return this.$store.state.selectedCity;
+      },
+      set(selectedCity) {
+        this.$store.commit("setSelectedCity", selectedCity);
+      }
+    },
+    duration: {
+      get() {
+        return this.$store.state.duration;
+      },
+      set(duration) {
+        this.$store.commit("setDuration", duration);
+      }
+    },
     description: {
       get() {
         return this.$store.state.description;
@@ -133,34 +165,68 @@ export default {
       set(description) {
         this.$store.commit("setDescription", description);
       }
+    },
+    loggedInAsUser: {
+      get() {
+        return this.$store.state.loggedInAsUser;
+      },
+      set(loggedInAsUser) {
+        this.$store.commit("setLoggedInAsUser", loggedInAsUser);
+      }
+    },
+    attendees() {
+      return this.$store.state.attendees;
     }
   },
   methods: {
     /*
-        Denna method tar hand om datan registrerad av användaren efter att ha klickat på "submit"
-        */
-    onSubmit() {
-      console.log("titel: " + this.title);
-      console.log("träningstyp: " + this.checkboxGroup);
-      console.log("kalender: " + this.datetime);
-      console.log("deltagare: " + this.participants);
-      console.log("beskrivning: " + this.description);
+    Denna method tar hand om datan registrerad av användaren efter att ha klickat på "submit"
+    */
 
-      // omkonverterar input från formuläret m.h.a v-model till ett Json-objekt och skickar mot express
-      fetch("http://localhost:3000/post", {
-        body: JSON.stringify({
-          title: this.title,
-          workout: this.checkboxGroup,
-          calenderWithTime: this.datetime,
-          participants: this.participants,
-          description: this.description
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST"
+    onSubmit() {
+      let newUID = uuid.v4();
+      /* 
+      En popup ruta kommer först att dyka upp och frågar användaren ifall datan stämmer.
+      Fetchen kommer isåfall att ske så fort användaren har klickat på "OK" annars kommer 
+      informationen att skickas oavsett och allt försvinner enligt koden nedan via .then efter fetch
+      */
+      this.$buefy.dialog.confirm({
+        message: "Stämmer all information nu ? ",
+        onConfirm: () =>
+          // omkonverterar input från formuläret m.h.a v-model till ett Json-objekt och skickar mot express
+          fetch("/api/createpost", {
+            body: JSON.stringify({
+              postId: newUID,
+              title: this.title,
+              description: this.description,
+              city: this.selectedCity,
+              timestamp: this.datetime,
+              duration: this.duration,
+              activity: this.checkboxGroup,
+              attendees: [],
+              limit: this.participants,
+              counter: 0,
+              creator: this.loggedInAsUser
+            }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST"
+          }).then(() => {
+            // Efter att ha skickat information till databasen återgå till hemsidan
+            this.$router.push("/");
+            // Återställer till ett tomt formulär
+
+            this.title = null;
+            this.checkboxGroup = [];
+            this.datetime = null;
+            this.participants = null;
+            this.description = null;
+            this.selectedCity = null;
+            this.duration = null;
+          })
       });
     }
   }
-}
+};
 </script>
 
 <style scoped>

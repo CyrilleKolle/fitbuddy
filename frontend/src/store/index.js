@@ -5,41 +5,36 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    attends: {
+    counter: 0,
+    title: null,
+    description: null,
+    city: null,
+    timestamp: null,
+    duration: null,
+    activity: null,
+    other: null,
+    attendees: [],
+    limit: null,
+    checkboxGroup: "",
+    datetime: new Date(),
+    participants: null,
+    selectedCity: null,
 
-    },
+    //profil
+    loggedInAsUser: null,
+    username: null,
+    password: null,
+    firstname: null,
+    lastname: null,
+    email: null,
+    phone: null,
+    birthyear: null,
+    gender: null,
+    userCity: null,
 
-    events: {
-      counter: 0,
 
-      title: null,
-      description: null,
-      city: null,
-      timestamp: null,
-      duration: null,
-      activity: null,
-      other: null,
-      attendies: null,
-      limit: null,
-      checkboxGroup: [],
-      datetime: new Date(),
-      participants: null,
 
-      //profil
-      loggedInAsUser: null,
-      username: null,
-      password: null,
-      firstname: null,
-      lastname: null,
-      email: null,
-      phone: null,
-      birthyear: null,
-      gender: null,
-      userCity: null,
-
-    },
-
-  },  
+  },
 
   mutations: {
     // Profile, Inlog & Register
@@ -75,8 +70,11 @@ export default new Vuex.Store({
 
     // Other
 
+    setSelectedCity(state, payload) {
+      state.selectedCity = payload
+    },
     countMutation(state, counter) {
-      state.events.counter += counter
+      state.counter += counter
     },
     joinMutation(state, counter) {
       state.counter += counter
@@ -93,8 +91,8 @@ export default new Vuex.Store({
     setOther(state, other) {
       state.other = other
     },
-    setAttendies(state, attendies) {
-      state.attendies = attendies
+    setAttendees(state, attendees) {
+      state.attendees = attendees
     },
     setLimit(state, limit) {
       state.limit = limit

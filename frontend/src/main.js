@@ -5,6 +5,7 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import UUID from "vue-uuid";
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Buefy from 'buefy'
@@ -15,6 +16,7 @@ import Paginate from 'vuejs-paginate'
 
 
 Vue.use(Paginate)
+Vue.use(UUID)
 Vue.component('paginate', Paginate)
 Vue.component('VueElevator', VueElevator)
 
