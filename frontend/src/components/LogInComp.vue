@@ -17,7 +17,6 @@
         <b-button class="is-twitter" @click="onSubmit()">Logga in</b-button>
       </div>
       <div v-if="authenticationProblem">Fel användarnamn eller lösenord!</div>
-      {{ someArray }}
     </div>
   </div>
 </template>
@@ -25,13 +24,6 @@
 <script>
 export default {
   name: "LogInComp",
-  data() {
-    return {
-      authenticationProblem: false,
-      loggedInAsUser: null,
-      someArray: null
-    };
-  },
   computed: {
     username: {
       get() {
@@ -61,11 +53,26 @@ export default {
           username: this.username,
           password: this.password
         })
-      }).then(result => {
-        console.log(this.username, this.password);
-        console.log(result);
+      }).then(response => {
+        if (response.status === 401) {
+          this.authenticationProblem = true;
+          console.log("gick ej logga in");
+        } else {
+          this.authenticationProblem = false;
+          this.reloadPage();
+          console.log("gick att logga in");
+        }
       });
+    },
+    reloadPage() {
+      this.$router.push({ name: "Home" });
+      window.location.reload();
     }
+  },
+  data() {
+    return {
+      authenticationProblem: false
+    };
   }
 };
 </script>

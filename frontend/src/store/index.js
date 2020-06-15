@@ -26,11 +26,7 @@ export default new Vuex.Store({
       { id: 2, name: 'Handball', description: 'Looking for a handball buddy heden', time: '12:00', date: 'Mon 23', participants: 0 }],
 
     counter: 0,
-    birthyear: null,
-    password: null,
-    username: null,
-    firstname: null,
-    lastname: null,
+
     title: null,
     description: null,
     city: null,
@@ -44,14 +40,21 @@ export default new Vuex.Store({
     datetime: new Date(),
     participants: null,
 
-
-
+    //profil
+    loggedInAsUser: null,
+    username: null,
+    password: null,
+    firstname: null,
+    lastname: null,
+    email: null,
+    phone: null,
+    birthyear: null,
+    gender: null,
+    userCity: null,
   },
 
   mutations: {
-    joinMutation(state, counter) {
-      state.counter += counter
-    },
+    // Profile, Inlog & Register
     setUserName(state, payload) {
       state.username = payload
     },
@@ -63,6 +66,30 @@ export default new Vuex.Store({
     },
     setLastname(state, payload) {
       state.lastname = payload
+    },
+    setEmail(state, payload) {
+      state.email = payload
+    },
+    setPhone(state, payload) {
+      state.phone = payload
+    },
+    setBirthyear(state, payload) {
+      state.birthyear = payload
+    },
+    setGender(state, payload) {
+      state.gender = payload
+    },
+    setUserCity(state, payload) {
+      state.userCity = payload
+    },
+    setLoggedInAsUser(state, payload) {
+      state.loggedInAsUser = payload
+    },
+
+    // Other
+
+    joinMutation(state, counter) {
+      state.counter += counter
     },
     setTimestamp(state, timestamp) {
       state.timestamp = timestamp
