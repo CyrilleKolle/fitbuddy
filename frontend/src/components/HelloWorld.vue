@@ -29,23 +29,7 @@ export default {
       }
     }
   },
-  methods: {
-    onSubmit() {
-      fetch("/api/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password
-        })
-      }).then(result => {
-        console.log(this.username, this.password);
-        console.log(result);
-      });
-    }
-  }
+
 }
 
 

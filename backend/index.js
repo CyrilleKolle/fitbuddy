@@ -20,6 +20,24 @@ const upload = multer({ dest: 'uploads/' })
 // }
 
 
+// const moment = require('moment'),
+//     ws = require('ws')
+
+// const webSocketServer = new ws.Server({ port: 3002 })
+
+// const webSockets = []
+
+// function getTimeObject() {
+//     return { time: moment().format('HH:mm:ss') }
+// }
+
+
+
+
+
+
+
+
 let database
 app.use(express.static(path.join(path.resolve(), 'public')))
 app.use(express.json())
@@ -103,6 +121,7 @@ app.get('/posts', (request, response) => {
     })
 })
 
+
 app.get('/posts/:postId', (request, response) => {
     database.all('SELECT * FROM posts WHERE postId=?', [request.params.postId]).then(posts => {
         response.send(posts)
@@ -116,11 +135,13 @@ app.put('/attends', (request, response) => {
     })
 })
 
-app.delete('/remove', (request, response) => {
+
+app.delete('/remove', (request, response) =>{
     database.all('DELETE FROM posts WHERE postId=?', [request.body.postId])
-        .then(remove => {
-            response.send(remove)
-        })
+    .then(remove => {
+        response.send(remove)
+    })
+
 })
 
 app.get('/posts', (request, response) => {
@@ -162,6 +183,7 @@ app.put('/updateProfile', (request, response) => {
                 response.status(401).send('Tyvärr du är en noob!')
             }
         })
+
 })
 
 
@@ -177,3 +199,25 @@ sqlite.open({ driver: sqlite3.Database, filename: 'fitbuddy.sqlite' })
 app.listen(3000, () => {
     console.log('Server running on port 3000')
 })
+// webSocketServer.on('connection', (webSocket) => {
+//     console.log('Client connected')
+
+//     webSocket.send(JSON.stringify(getTimeObject()))
+
+//     webSocket.on('message', (data) => {
+//         console.log(data)
+//     })
+
+//     webSocket.on('close', () => {
+//         console.log('Client disconnected')
+//         webSockets.splice(webSockets.indexOf(webSocket), 1)
+//     })
+
+//     webSockets.push(webSocket)
+// })
+
+// setInterval(() => {
+//     webSockets.forEach((webSocket) => {
+//         webSocket.send(JSON.stringify(getTimeObject()))
+//     })
+// }, 1000)
