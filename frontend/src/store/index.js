@@ -62,7 +62,7 @@ export default new Vuex.Store({
     setPhone(state, payload) {
       state.phone = payload
     },
- 
+
     setGender(state, payload) {
       state.gender = payload
     },
