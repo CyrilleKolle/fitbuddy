@@ -11,7 +11,16 @@
           style="border-radius: 50%; width: 300px; height:300px;"
         />
         <br />
-        <b-button class="is-twitter">Välj en bild</b-button>
+        <!-- <b-button class="is-twitter">Välj en bild</b-button> -->
+        <b-field class="file">
+          <b-upload v-model="file">
+            <a class="button is-twitter upload">
+              <b-icon icon="upload"></b-icon>
+              <span>Välj en bild</span>
+            </a>
+          </b-upload>
+          <span class="file-name" v-if="file">{{ file.name }}</span>
+        </b-field>
       </div>
       <div class="inputdiv">
         <b-field label="Email"></b-field>
@@ -58,7 +67,6 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.username = result[0].username;
-        this.password = result[0].password;
         this.firstname = result[0].firstname;
         this.lastname = result[0].lastname;
         this.email = result[0].email;
@@ -148,13 +156,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(
-        this.email,
-        this.phone,
-        this.gender,
-        this.city,
-        this.username
-      );
       fetch("/api/updateProfile", {
         method: "put",
         headers: {
@@ -178,7 +179,8 @@ export default {
   },
   data() {
     return {
-      age: null
+      age: null,
+      file: null
     };
   }
 };
@@ -215,6 +217,9 @@ h1 {
 }
 .img {
   padding: 30px;
+}
+.upload {
+  margin: auto;
 }
 
 .inputdiv {

@@ -15,7 +15,6 @@
       <div class="button-log">
         <br />
         <b-button class="is-twitter" @click="onSubmit()">Logga in</b-button>
-        {{ username }}
       </div>
       <div v-if="authenticationProblem">Fel användarnamn eller lösenord!</div>
     </div>

@@ -5,7 +5,8 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const { uuid } = require('uuidv4')
-
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 
 let database
@@ -79,6 +80,10 @@ app.get('/loadProfile/:username', (request, response) => {
     })
 })
 
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+
+})
+
 app.put('/updateProfile', (request, response) => {
     database
         .all('SELECT 1 FROM users WHERE username=?', [request.body.username])
@@ -86,7 +91,7 @@ app.put('/updateProfile', (request, response) => {
             if (rows.length === 1) {
                 // Correct user name and password
                 database
-                    .run('UPDATE users SET email=?,phone=?, gender=?,city=? WHERE username=?', [
+                    .run('UPDATE users SET email=?,phone=?,gender=?,city=? WHERE username=?', [
                         request.body.email,
                         request.body.phone,
                         request.body.gender,
