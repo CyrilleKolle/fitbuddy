@@ -14,19 +14,25 @@
             <div class="textbox">
             <input type="text" placeholder="Efternamn" v-model="lastname">
             </div>
+            <div class="textbox">
+            <input type="text" placeholder="Födelseår" v-model="birthyear">
+            </div>
 
           <div class="textbox">
             <input type="text" placeholder="Användarnamn" v-model="username">
             </div>
 
         <div class="textbox">
-            <input type="password" placeholder="Lösenord" v-model="password"> <br>
+            <input type="password" placeholder="Lösenord" v-model="password" > <br>
             
             </div>
         </div>
         <div class="button-reg">
             <br>
             <b-button @click="onSubmit" class="is-twitter">Registrera</b-button>
+        </div>
+        <div class="textbox">
+          <label v-if="this.autenicationProblem">Användarenamn finns redan!</label>
         </div>
         </div>
         </div>
@@ -53,6 +59,14 @@ export default {
         this.$store.commit("setUserPassword", password);
       }
     },
+    birthyear: {
+      get() {
+        return this.$store.state.birthyear;
+      },
+      set(birthyear) {
+        this.$store.commit("setBirthyear", birthyear);
+      }
+    },
     firstname: {
       get() {
         return this.$store.state.firstname;
@@ -72,7 +86,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      fetch("/api/login", {
+      fetch("/api/signUp", {
         method: "post",
         headers: {
           "Content-Type": "application/json"
@@ -80,14 +94,30 @@ export default {
         body: JSON.stringify({
           username: this.username,
           password: this.password,
+          birthyear: this.birthyear,
           firstname: this.firstname,
           lastname: this.lastname
         })
-      }).then(result => {
-        console.log(this.firstname, this.lastname, this.username, this.password);
-        console.log(result);
+      }).then(response => {
+                if (response.status === 401) {
+          this.autenicationProblem = true;
+          console.log("gick ej logga in");
+        } else {
+          this.autenicationProblem = false;
+          this.reloadPage();
+          console.log("gick att logga in");
+        }
       });
-    }
+    },
+    reloadPage() {
+      this.$router.push({ name: "Login" });
+      window.location.reload();
+    } 
+  },
+  data (){
+    return {
+      autenicationProblem: false
+    };
   }
 }
 
