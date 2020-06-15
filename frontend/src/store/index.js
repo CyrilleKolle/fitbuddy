@@ -5,57 +5,45 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    attends :{
-      
+    attends: {
+
     },
 
-    events:
-    {
-    counter: 0,
+    events: {
+      counter: 0,
 
-    title: null,
-    description: null,
-    city: null,
-    timestamp: null,
-    duration: null,
-    activity: null,
-    other: null,
-    attendies: null,
-    limit: null,
-    checkboxGroup: [],
-    datetime: new Date(),
-    participants: null,
-<<<<<<< HEAD
-    }
+      title: null,
+      description: null,
+      city: null,
+      timestamp: null,
+      duration: null,
+      activity: null,
+      other: null,
+      attendies: null,
+      limit: null,
+      checkboxGroup: [],
+      datetime: new Date(),
+      participants: null,
 
-  },
+      //profil
+      loggedInAsUser: null,
+      username: null,
+      password: null,
+      firstname: null,
+      lastname: null,
+      email: null,
+      phone: null,
+      birthyear: null,
+      gender: null,
+      userCity: null,
 
-  mutations: {
-
-    joinMutation(state, counter) {
-      state.events.counter += counter
     },
-    countMutation(state, counter) {
-      state.events.counter += counter
-    },
-=======
 
-    //profil
-    loggedInAsUser: null,
-    username: null,
-    password: null,
-    firstname: null,
-    lastname: null,
-    email: null,
-    phone: null,
-    birthyear: null,
-    gender: null,
-    userCity: null,
-  },
+  },  
 
   mutations: {
     // Profile, Inlog & Register
->>>>>>> 5d229bea39f3b41b13618aaba4ec6c55ba14e317
+
     setUserName(state, payload) {
       state.username = payload
     },
@@ -74,9 +62,7 @@ export default new Vuex.Store({
     setPhone(state, payload) {
       state.phone = payload
     },
-    setBirthyear(state, payload) {
-      state.birthyear = payload
-    },
+ 
     setGender(state, payload) {
       state.gender = payload
     },
@@ -89,6 +75,9 @@ export default new Vuex.Store({
 
     // Other
 
+    countMutation(state, counter) {
+      state.events.counter += counter
+    },
     joinMutation(state, counter) {
       state.counter += counter
     },
@@ -125,7 +114,7 @@ export default new Vuex.Store({
     setDescription(state, payload) {
       state.description = payload
     },
-    setBirthyear(state, payload) {
+    setBirthyear(state, payload) {
       state.birthyear = payload
     }
   },

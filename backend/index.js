@@ -4,22 +4,27 @@ const sqlite3 = require('sqlite3')
 const app = express()
 const path = require('path')
 const cors = require('cors')
-<<<<<<< HEAD
-const moment = require('moment'),
-    ws = require('ws')
-
-const webSocketServer = new ws.Server({ port: 3002 })
-
-const webSockets = []
-
-function getTimeObject() {
-    return { time: moment().format('HH:mm:ss') }
-}
-=======
 const { uuid } = require('uuidv4')
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
->>>>>>> 5d229bea39f3b41b13618aaba4ec6c55ba14e317
+
+
+// const moment = require('moment'),
+//     ws = require('ws')
+
+// const webSocketServer = new ws.Server({ port: 3002 })
+
+// const webSockets = []
+
+// function getTimeObject() {
+//     return { time: moment().format('HH:mm:ss') }
+// }
+
+
+
+
+
+
 
 
 let database
@@ -105,7 +110,7 @@ app.get('/posts', (request, response) => {
     })
 })
 
-<<<<<<< HEAD
+
 app.get('/posts/:postId', (request, response) => {
     database.all('SELECT * FROM posts WHERE postId=?', [request.params.postId]).then(posts => {
         response.send(posts)
@@ -130,7 +135,8 @@ app.get('/posts', (request, response) => {
     database.all('SELECT * FROM posts WHERE city=?', [request.params.city]).then(filterCities => {
         response.send(filterCities)
     })
-=======
+})
+
 app.get('/loadProfile/:username', (request, response) => {
     database.all('SELECT * FROM users WHERE username=?', [request.params.username]).then(result => {
         response.send(result)
@@ -164,7 +170,7 @@ app.put('/updateProfile', (request, response) => {
                 response.status(401).send('Tyvärr du är en noob!')
             }
         })
->>>>>>> 5d229bea39f3b41b13618aaba4ec6c55ba14e317
+
 })
 
 
