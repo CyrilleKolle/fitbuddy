@@ -81,29 +81,43 @@
         <div
           v-for="(post, index) in allPosts"
           :key="`${index}-${post.id}`"
-          class="contact-form-container"
+          class="contact-form-container2"
           :fixed-top="true"
         >
           <!-- <div>this.time</div> -->
 
           <div id="title-post">{{post.title}}</div>
-          <div class="right-post">{{post.city}}</div>
+          <div class="right-post">
+            {{ post.city + '\xa0'}}
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
           <hr />
           <div id="des-post">{{post.description}}</div>
 
           <div class="right-post">posted: {{post.timestamp}}</div>
           <div class="right-post">duration: {{post.duration}} h</div>
-          <div id="activity-post">{{post.activity}}</div>
+          <div id="activity-post">
+            {{post.activity + '\xa0'}}
+            <i class="fas fa-running"></i>
+          </div>
           <!-- <div v-for="(name, i) in JSON.parse(post.attendees)" :key="`${i}-${name}`"></div> -->
-          <button @click="increaseAttend(post)" :disabled=" post.counter === post.limit">here</button>
-          <hr />
-          <span style="border: 1px solid black">{{post.counter}}/{{post.limit}}</span>
-          <div>{{post.postId}}</div>
-          <div class="box-3" v-if="post.creator === loggedInAsUser">
-            <!-- <div class="btn btn-three"> -->
 
-            <button @click="deletePost(post)">cancel</button>
-            <!-- </div> -->
+          <!-- <button @click="increaseAttend(post)" :disabled=" post.counter === post.limit">here</button> -->
+          <hr />
+          <div class="columns">
+            <div class="column">
+              <b-button
+                class="is-twitter"
+                @click="increaseAttend(post)"
+                :disabled=" post.counter === post.limit"
+              >Delta</b-button>
+            </div>
+            <div class="column">{{post.counter + '\xa0'}}/{{'\xa0' + post.limit}}</div>
+            <div class="column" v-if="post.creator === loggedInAsUser">
+              <!-- <div class="btn btn-three"> -->
+              <b-button class="is-danger" @click="deletePost(post)">Radera</b-button>
+              <!-- </div> -->
+            </div>
           </div>
         </div>
         <hr />
@@ -401,12 +415,11 @@ $speed: 1s;
 </style>
 <style>
 #title-post {
-  position: absolute;
+  justify-content: center;
+  align-items: center;
 }
 .right-post {
-  margin: 0;
   display: flex;
-  position: relative;
   justify-content: right;
   align-items: right;
 }
@@ -467,9 +480,8 @@ div[class*="box"] {
   background-color: rgba(255, 255, 255, 0.1);
   border-width: 0 5px 0 5px;
 }
-.contact-form-container {
-  /* background-color: rgb(226, 225, 225); */
-  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+.contact-form-container2 {
+  border: 1px solid grey;
   width: 85%;
   max-width: 1000px;
   padding: 30px 40px;
@@ -486,7 +498,7 @@ div[class*="box"] {
 }
 
 .fixedBox {
-  box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
+  border: 1px solid grey;
   width: 85%;
   left: 0;
   right: 0;
@@ -517,6 +529,9 @@ div[class*="box"] {
   padding-bottom: 30px;
   padding-top: 40px;
   text-align: center;
+}
+
+.btn-bottom {
 }
 </style>
 

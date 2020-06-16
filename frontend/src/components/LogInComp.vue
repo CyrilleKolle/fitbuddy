@@ -122,7 +122,7 @@ p {
   outline: none;
   color: black;
   font-size: 18px;
-  width: 50%;
+  width: 100%;
   float: center;
 }
 

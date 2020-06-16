@@ -294,6 +294,7 @@ section {
   color: #333;
   text-transform: uppercase; /* a -> A  etc.. */
   font-size: 13px;
+  width: 100%;
 }
 
 /* Gör ändringar i formulärets alla input + textarean */
