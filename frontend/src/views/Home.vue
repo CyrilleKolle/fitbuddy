@@ -2,9 +2,9 @@
   <div class="fixedBox">
     <div class="home">
       <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-      <HelloWorld id="main-title" msg="FitBuddy" />
+      <!-- <HelloWorld id="main-title" msg="FitBuddy" /> -->
       <b-button @click="open = true" id="filter-button">
-        <i class="fas fa-filter"></i>
+        <i class="fas fa-align-justify"></i>
       </b-button>
 
       <section>
@@ -139,13 +139,8 @@
 //   this.webSocket.send('Hi, there!')
 // })
 
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "Home",
-  components: {
-    HelloWorld
-  },
   computed: {
     filteredEvents(city) {
       return this.$store.state.events.filter(event => event.city === city);
@@ -473,7 +468,7 @@ div[class*="box"] {
   border-width: 0 5px 0 5px;
 }
 .contact-form-container {
-  background-color: rgb(226, 225, 225);
+  /* background-color: rgb(226, 225, 225); */
   box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.7);
   width: 85%;
   max-width: 1000px;

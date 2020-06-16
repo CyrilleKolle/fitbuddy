@@ -24,19 +24,15 @@
                   <strong>Träningstyp:</strong>
                 </label>
                 <div class="block">
-                  <b-radio v-model="checkboxGroup" native-value="Fotboll">Fotboll</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="Football">Fotboll</b-radio>
                   <b-radio v-model="checkboxGroup" native-value="Tennis">Tennis</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="cycling">Cykling</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="run">Löpning</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="Bandy">Bandy</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="swimming">Simning</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="climbing">Klättring</b-radio>
+                  <b-radio v-model="checkboxGroup" native-value="Gym">Gym</b-radio>
                 </div>
-                <!-- <div class="block">
-                  <b-checkbox v-model="checkboxGroup" native-value="Football">Fotboll</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="Tennis">Tennis</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="cycling">Cykling</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="run">Löpning</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="Bandy">Bandy</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="swimming">Simning</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="climbing">Klättring</b-checkbox>
-                  <b-checkbox v-model="checkboxGroup" native-value="Gym">Gym</b-checkbox>
-                </div>-->
               </div>
 
               <!-- Användaren kan m.h.a av en kalender bestämma dag -->
