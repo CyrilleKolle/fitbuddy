@@ -13,13 +13,12 @@
         <br />
         <!-- <b-button class="is-twitter">Välj en bild</b-button> -->
         <b-field class="file">
-          <b-upload v-model="file">
+          <b-upload>
             <a class="button is-twitter upload">
               <b-icon icon="upload"></b-icon>
               <span>Välj en bild</span>
             </a>
           </b-upload>
-          <span class="file-name" v-if="file">{{ file.name }}</span>
         </b-field>
       </div>
       <div class="inputdiv">
@@ -179,8 +178,7 @@ export default {
   },
   data() {
     return {
-      age: null,
-      file: null
+      age: null
     };
   }
 };
