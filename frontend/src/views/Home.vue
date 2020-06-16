@@ -84,24 +84,30 @@
           class="contact-form-container"
           :fixed-top="true"
         >
-          <!-- <div>this.time</div> -->
+          <div class="columns">
+            <div class="column">{{post.activity}}
+              <div>duration: {{post.duration}} min</div>
+            </div>
+            <div class="column">{{post.title}}</div>
+            <div class="column">
+              {{post.city}}
+              <div>posted: {{post.timestamp.substring(2, 10)}}</div>
+              <div>{{post.timestamp.substring(14,19)}}</div>
+             
+            </div>
+        
+          </div>
+          <div class="columns"></div>
 
-          <div id="title-post">{{post.title}}</div>
-          <div class="right-post">{{post.city}}</div>
           <hr />
+
           <div id="des-post">{{post.description}}</div>
 
-          <div class="right-post">posted: {{post.timestamp}}</div>
-          <div class="right-post">duration: {{post.duration}} h</div>
-          <div id="activity-post">{{post.activity}}</div>
-          <!-- <div v-for="(name, i) in JSON.parse(post.attendees)" :key="`${i}-${name}`"></div> -->
           <button @click="increaseAttend(post)" :disabled=" post.counter === post.limit">here</button>
           <hr />
           <span style="border: 1px solid black">{{post.counter}}/{{post.limit}}</span>
           <div>{{post.postId}}</div>
           <div class="box-3" v-if="post.creator === loggedInAsUser">
-            <!-- <div class="btn btn-three"> -->
-
             <button @click="deletePost(post)">cancel</button>
             <!-- </div> -->
           </div>
@@ -329,7 +335,10 @@ export default {
       time: null,
       webSocket: null,
       hideDelete: false,
-      here: "here"
+      here: "here",
+
+      dateString: [],
+      timeString: []
     };
   },
   created() {
@@ -337,6 +346,9 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.allPosts = result;
+
+        this.dateString = this.allPosts[0].timestamp;
+        console.log(this.dateString);
       });
   }
 };
@@ -400,8 +412,12 @@ $speed: 1s;
 }
 </style>
 <style>
+#time {
+  font-size: 12px;
+  position: left;
+}
 #title-post {
-  position: absolute;
+  position: center;
 }
 .right-post {
   margin: 0;
@@ -517,6 +533,12 @@ div[class*="box"] {
   padding-bottom: 30px;
   padding-top: 40px;
   text-align: center;
+}
+#duration{
+  position: relative;
+  display: flex;
+  align-items: left;
+
 }
 </style>
 
