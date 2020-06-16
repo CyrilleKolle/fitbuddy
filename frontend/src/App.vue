@@ -34,6 +34,10 @@
             >Logga in</b-navbar-item>
           </div>
           <div class="buttons" v-if="this.loggedInAsUser !== null">
+            <label class="username">
+              Inloggad:
+              <b>{{this.loggedInAsUser}}</b>
+            </label>
             <b-navbar-item @click="logOut()" class="button is-twitter specialbtn">Logga ut</b-navbar-item>
           </div>
         </b-navbar-item>
@@ -105,6 +109,12 @@ $twitter-invert: findColorInvert($twitter);
 
 .specialbtn.navbar-item:focus {
   background-color: $twitter !important;
+}
+
+.username {
+  color: black;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 $colors: (
