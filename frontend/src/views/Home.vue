@@ -84,15 +84,31 @@
           class="contact-form-container2"
           :fixed-top="true"
         >
-          <!-- <div>this.time</div> -->
+          <div class="columns">
+            <div class="column">{{post.activity}}
+              <div>duration: {{post.duration}} min</div>
+            </div>
+            <div class="column">{{post.title}}</div>
+            <div class="column">
+              {{post.city}}
+              <div>posted: {{post.timestamp.substring(2, 10)}}</div>
+              <div>{{post.timestamp.substring(14,19)}}</div>
+             
+            </div>
+        
+          </div>
+          <div class="columns"></div>
 
           <div id="title-post">{{post.title}}</div>
           <div class="right-post">
             {{ post.city + '\xa0'}}
             <i class="fas fa-map-marker-alt"></i>
           </div>
+
           <hr />
+
           <div id="des-post">{{post.description}}</div>
+
 
           <div class="right-post">posted: {{post.timestamp}}</div>
           <div class="right-post">duration: {{post.duration}} h</div>
@@ -118,6 +134,7 @@
               <b-button class="is-danger" @click="deletePost(post)">Radera</b-button>
               <!-- </div> -->
             </div>
+
           </div>
         </div>
         <hr />
@@ -343,7 +360,10 @@ export default {
       time: null,
       webSocket: null,
       hideDelete: false,
-      here: "here"
+      here: "here",
+
+      dateString: [],
+      timeString: []
     };
   },
   created() {
@@ -351,6 +371,9 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.allPosts = result;
+
+        this.dateString = this.allPosts[0].timestamp;
+        console.log(this.dateString);
       });
   }
 };
@@ -414,9 +437,16 @@ $speed: 1s;
 }
 </style>
 <style>
+#time {
+  font-size: 12px;
+  position: left;
+}
 #title-post {
+
   justify-content: center;
   align-items: center;
+  position: center;
+
 }
 .right-post {
   display: flex;
@@ -531,7 +561,10 @@ div[class*="box"] {
   text-align: center;
 }
 
-.btn-bottom {
+#duration{
+  position: relative;
+  display: flex;
+  align-items: left;
 }
 </style>
 
